@@ -1,4 +1,4 @@
-module.exports = function (context, myBlob) {
-    context.log("JavaScript blob trigger function processed blob \n Name:", context.bindingData.name, "\n Blob Size:", myBlob.length, "Bytes");
+module.exports = function (context, peopleNow) {
+    context.log("JavaScript blob trigger function processed blob peopleNow:\n Blob Size:", peopleNow.length, "Bytes");
     context.done();
 };

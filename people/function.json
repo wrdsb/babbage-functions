@@ -1,10 +1,24 @@
 {
   "bindings": [
     {
-      "name": "myBlob",
+      "name": "peopleNow",
       "type": "blobTrigger",
       "direction": "in",
-      "path": "samples-workitems/{name}",
+      "path": "people/people_now.json",
+      "connection": "wrdsbbabbage_STORAGE"
+    },
+    {
+      "name": "peoplePrevious",
+      "type": "blob",
+      "direction": "in",
+      "path": "people/people_previous.json",
+      "connection": "wrdsbbabbage_STORAGE"
+    },
+    {
+      "name": "peopleDiff",
+      "type": "blob",
+      "direction": "out",
+      "path": "people/people_diff.json",
       "connection": "wrdsbbabbage_STORAGE"
     }
   ],
