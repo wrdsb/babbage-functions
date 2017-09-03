@@ -31,6 +31,72 @@ module.exports = function (context) {
                 });
             }
 
+            // changed email?
+            if (old_record.email != new_record.email) {
+                person_changed = true;
+                person_changes.push({
+                    email: {
+                        from: old_record.email,
+                        to: new_record.email
+                    }
+                });
+            }
+
+            // changed name?
+            if (old_record.name != new_record.name) {
+                person_changed = true;
+                person_changes.push({
+                    name: {
+                        from: old_record.name,
+                        to: new_record.name
+                    }
+                });
+            }
+
+            // changed sortable name?
+            if (old_record.sortable_name != new_record.sortable_name) {
+                person_changed = true;
+                person_changes.push({
+                    sortable_name: {
+                        from: old_record.sortable_name,
+                        to: new_record.sortable_name
+                    }
+                });
+            }
+
+            // changed first_name?
+            if (old_record.first_name != new_record.first_name) {
+                person_changed = true;
+                person_changes.push({
+                    first_name: {
+                        from: old_record.first_name,
+                        to: new_record.first_name
+                    }
+                });
+            }
+
+            // changed last_name?
+            if (old_record.last_name != new_record.last_name) {
+                person_changed = true;
+                person_changes.push({
+                    last_name: {
+                        from: old_record.last_name,
+                        to: new_record.last_name
+                    }
+                });
+            }
+
+            // changed ipps_home_location?
+            if (old_record.ipps_home_location != new_record.ipps_home_location) {
+                person_changed = true;
+                person_changes.push({
+                    ipps_home_location: {
+                        from: old_record.ipps_home_location,
+                        to: new_record.ipps_home_location
+                    }
+                });
+            }
+
             // if person changed, add changes to total diff
             if (person_changed) {
                 console.log('Found updated record for EIN ' + ein);

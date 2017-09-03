@@ -4,21 +4,21 @@
       "name": "peopleNow",
       "type": "blobTrigger",
       "direction": "in",
-      "path": "people/people_now.json",
+      "path": "ipps_people/people_now.json",
       "connection": "wrdsbbabbage_STORAGE"
     },
     {
       "name": "peoplePrevious",
       "type": "blob",
       "direction": "in",
-      "path": "people/people_previous.json",
+      "path": "ipps_people/people_previous.json",
       "connection": "wrdsbbabbage_STORAGE"
     },
     {
       "name": "peopleDiff",
       "type": "blob",
       "direction": "out",
-      "path": "people/people_diff.json",
+      "path": "ipps_people/people_diff.json",
       "connection": "wrdsbbabbage_STORAGE"
     }
   ],
