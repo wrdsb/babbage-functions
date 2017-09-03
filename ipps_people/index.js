@@ -8,7 +8,8 @@ module.exports = function (context) {
     var changed_records = {};
 
     // loop through all records in people_now, looking for changes
-    Object.entries(people_now).forEach(([ein, new_record]) => {
+    Object.getOwnPropertyNames(people_now).forEach(function (ein) {
+        var new_record = people_now[ein];
 
         // track whether or not we found changes, and what they were
         var person_changed = false;
@@ -114,9 +115,11 @@ module.exports = function (context) {
     });
 
     // if we have any old records remaining, they didn't match a new record, so they must be deletes
-    Object.entries(people_previous).forEach(([ein, new_record]) => {
+    Object.getOwnPropertyNames(people_previous).forEach(function (ein) {
+        var old_record = people_previous[ein];
+
         console.log('Found deleted record for EIN ' + ein);
-        changed_records[ein] = {delete: new_record};
+        changed_records[ein] = {delete: old_record};
     });
 
     people_diff = changed_records;
