@@ -4,7 +4,7 @@
       "name": "peopleNow",
       "type": "blobTrigger",
       "direction": "in",
-      "path": "ipps_people/people_now.json",
+      "path": "ipps-people/people_now.json",
       "connection": "wrdsbbabbage_STORAGE"
     },
     {
