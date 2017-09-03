@@ -11,14 +11,14 @@
       "name": "peoplePrevious",
       "type": "blob",
       "direction": "in",
-      "path": "ipps_people/people_previous.json",
+      "path": "ipps-people/people_previous.json",
       "connection": "wrdsbbabbage_STORAGE"
     },
     {
       "name": "peopleDiff",
       "type": "blob",
       "direction": "out",
-      "path": "ipps_people/people_diff.json",
+      "path": "ipps-people/people_diff.json",
       "connection": "wrdsbbabbage_STORAGE"
     }
   ],
