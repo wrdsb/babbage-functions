@@ -25,6 +25,7 @@ module.exports = function (context) {
     function find_creates_and_updates(people_previous, people_now, changed_records, callback) {
         // loop through all records in people_now, looking for changes
         Object.getOwnPropertyNames(people_now).forEach(function (ein) {
+            context.log('Processing EIN ' + ein);
             var new_record = people_now[ein];      // get the full person record from people_now
             var old_record = people_previous[ein]; // get the corresponding record in people_previous
     
@@ -34,6 +35,7 @@ module.exports = function (context) {
     
             // if we found a corresponding record in people_previous, look for changes
             if (old_record) {
+                context.log('Found existing record for EIN ' + ein);
                 var person_diff = diff_person(old_record, new_record, person_changed, person_changes);
                 person_changed = person_diff.person_changed;
                 person_changes = person_diff.person_changes;
