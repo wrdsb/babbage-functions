@@ -34,13 +34,14 @@ module.exports = function (context) {
             var new_record = people_now[ein];      // get the full person record from people_now
             var old_record = people_previous[ein]; // get the corresponding record in people_previous
     
-            // track whether or not we found changes, and what they were
-            var person_changed = false;
-            var person_changes = [];
-    
             // if we found a corresponding record in people_previous, look for changes
             if (old_record) {
                 context.log('Found existing record for EIN ' + ein);
+
+                // track whether or not we found changes, and what they were
+                var person_changed = false;
+                var person_changes = [];
+
                 var person_diff = diff_person(old_record, new_record, person_changed, person_changes);
                 person_changed = person_diff.person_changed;
                 person_changes = person_diff.person_changes;
@@ -53,6 +54,8 @@ module.exports = function (context) {
                 if (person_changed) {
                     console.log('Found updated record for EIN ' + ein);
                     changed_records[ein] = {update: person_changes};
+                } else {
+                    console.log('No changes found for EIN ' + ein);
                 }
     
                 // remove old_record from people_previous
@@ -168,10 +171,10 @@ module.exports = function (context) {
         var deleted_assignments = [];
 
         new_assignments.forEach( function(new_assignment) {
-            if (!old_assignments.some( function(old_assignment) {
-                    return old_assignment.ipps_job_code     != new_assignment.ipps_job_code &&
-                    old_assignment.ipps_location_code       != new_assignment.ipps_location_code &&
-                    old_assignment.ipps_employee_group_code != new_assignment.ipps_employee_group_code;
+            if (!old_assignments.some( function(old_assignment, index, array) {
+                    return ((old_assignment.ipps_job_code     == new_assignment.ipps_job_code) &&
+                    (old_assignment.ipps_location_code       == new_assignment.ipps_location_code) &&
+                    (old_assignment.ipps_employee_group_code == new_assignment.ipps_employee_group_code));
             })) {
                 created_assignments.push(new_assignment);
             }
@@ -202,9 +205,9 @@ module.exports = function (context) {
 
         old_assignments.forEach( function(old_assignment) {
             if (!new_assignments.some( function(new_assignment) {
-                    return new_assignment.ipps_job_code     != old_assignment.ipps_job_code &&
-                    new_assignment.ipps_location_code       != old_assignment.ipps_location_code &&
-                    new_assignment.ipps_employee_group_code != old_assignment.ipps_employee_group_code;
+                    return ((new_assignment.ipps_job_code     == old_assignment.ipps_job_code) &&
+                    (new_assignment.ipps_location_code       == old_assignment.ipps_location_code) &&
+                    (new_assignment.ipps_employee_group_code == old_assignment.ipps_employee_group_code));
             })) {
                 deleted_assignments.push(old_assignment);
             }
@@ -231,5 +234,17 @@ module.exports = function (context) {
             });
         }
         return {person_changed: person_changed, person_changes: person_changes};
+    }
+
+    function is_new_assignment(assignment, index, array) {
+        
+    }
+
+    function is_updated_assignment(assignment, index, array) {
+        
+    }
+
+    function is_removed_assignment(assignment, index, array) {
+        
     }
 };
