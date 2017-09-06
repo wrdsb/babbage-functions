@@ -10,7 +10,7 @@
     {
       "name": "peoplePrevious",
       "type": "blob",
-      "direction": "in",
+      "direction": "inout",
       "path": "ipps-people/people_previous.json",
       "connection": "wrdsbbabbage_STORAGE"
     },
