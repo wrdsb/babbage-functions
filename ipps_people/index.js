@@ -172,20 +172,19 @@ module.exports = function (context) {
 
         new_assignments.forEach( function(new_assignment) {
             if (!old_assignments.some( function(old_assignment, index, array) {
-                    return ((old_assignment.ipps_job_code     == new_assignment.ipps_job_code) &&
-                    (old_assignment.ipps_location_code       == new_assignment.ipps_location_code) &&
-                    (old_assignment.ipps_employee_group_code == new_assignment.ipps_employee_group_code));
+                    return (old_assignment.ipps_position_id == new_assignment.ipps_position_id);
             })) {
                 created_assignments.push(new_assignment);
             }
         });
 
         new_assignments.forEach( function(new_assignment) {
-            if (old_assignments.some( function(old_assignment) {
-                    return old_assignment.ipps_job_code     == new_assignment.ipps_job_code &&
-                    old_assignment.ipps_location_code       == new_assignment.ipps_location_code &&
-                    old_assignment.ipps_employee_group_code == new_assignment.ipps_employee_group_code &&
+            if (old_assignments.some( function(old_assignment, index, array) {
+                    return old_assignment.ipps_position_id == new_assignment.ipps_position_id &&
                     (
+                        old_assignment.ipps_job_code                   != new_assignment.ipps_job_code ||
+                        old_assignment.ipps_location_code              != new_assignment.ipps_location_code ||
+                        old_assignment.ipps_employee_group_code        != new_assignment.ipps_employee_group_code ||
                         old_assignment.ipps_job_description            != new_assignment.ipps_job_description ||
                         old_assignment.ipps_location_description       != new_assignment.ipps_location_description ||
                         old_assignment.ipps_employee_group_category    != new_assignment.ipps_employee_group_category ||
@@ -196,7 +195,9 @@ module.exports = function (context) {
                         old_assignment.ipps_phone_no                   != new_assignment.ipps_phone_no ||
                         old_assignment.ipps_extension                  != new_assignment.ipps_extension ||
                         old_assignment.ipps_home_location_indicator    != new_assignment.ipps_home_location_indicator ||
-                        old_assignment.ipps_activity_code              != new_assignment.ipps_activity_code
+                        old_assignment.ipps_activity_code              != new_assignment.ipps_activity_code ||
+                        old_assignment.ipps_position_start_date        != new_assignment.ipps_position_start_date ||
+                        old_assignment.ipps_position_end_date          != new_assignment.ipps_position_end_date
                     );
             })) {
                 updated_assignments.push(new_assignment);
@@ -204,10 +205,8 @@ module.exports = function (context) {
         });
 
         old_assignments.forEach( function(old_assignment) {
-            if (!new_assignments.some( function(new_assignment) {
-                    return ((new_assignment.ipps_job_code     == old_assignment.ipps_job_code) &&
-                    (new_assignment.ipps_location_code       == old_assignment.ipps_location_code) &&
-                    (new_assignment.ipps_employee_group_code == old_assignment.ipps_employee_group_code));
+            if (!new_assignments.some( function(new_assignment, index, array) {
+                    return (new_assignment.ipps_position_id == old_assignment.ipps_position_id);
             })) {
                 deleted_assignments.push(old_assignment);
             }
