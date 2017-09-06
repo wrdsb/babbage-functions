@@ -10,17 +10,22 @@ module.exports = function (context) {
     var changed_records = {};
 
     waterfall([
-        find_creates_and_updates(people_previous, people_now, changed_records),
-        find_deletes(people_previous, changed_records)
-    ], function (err, changed_records) {
+        kickoff,
+        find_creates_and_updates,
+        find_deletes
+    ], function (err, result) {
         if (err) {
             context.done(err);
         } else {
-            context.bindings.peoplePrevious = context.bindings.peopleNow;
-            context.bindings.peopleDiff = changed_records;
-            context.done(null, changed_records);
+            context.bindings.peoplePrevious = result.people_now;
+            context.bindings.peopleDiff = result.changed_records;
+            context.done(null, result.changed_records);
         }
     });
+
+    function kickoff(callback) {
+        callback(null, people_previous, people_now, changed_records);
+    }
 
     function find_creates_and_updates(people_previous, people_now, changed_records, callback) {
         // loop through all records in people_now, looking for changes
@@ -59,10 +64,10 @@ module.exports = function (context) {
                 changed_records[ein] = {create: new_record};
             }
         });
-        callback(null, people_previous, changed_records);
+        callback(null, people_previous, people_now, changed_records);
     }
 
-    function find_deletes(people_previous, changed_records, callback) {
+    function find_deletes(people_previous, people_now, changed_records, callback) {
         // if we have any old records remaining, they didn't match a new record, so they must be deletes
         Object.getOwnPropertyNames(people_previous).forEach(function (ein) {
             var old_record = people_previous[ein];
@@ -70,7 +75,8 @@ module.exports = function (context) {
             console.log('Found deleted record for EIN ' + ein);
             changed_records[ein] = {delete: old_record};
         });
-        callback(null, changed_records);
+        var result = {people_previous: people_previous, people_now: people_now, changed_records: changed_records};
+        callback(null, result);
     }
 
     function diff_person(old_record, new_record, person_changed, person_changes) {
