@@ -1,0 +1,26 @@
+{
+  "bindings": [
+    {
+      "name": "peopleDiff",
+      "type": "blobTrigger",
+      "direction": "in",
+      "path": "ipps-people/people_diff.json",
+      "connection": "wrdsbbabbage_STORAGE"
+    },
+    {
+      "name": "peopleNow",
+      "type": "blob",
+      "direction": "in",
+      "path": "ipps-people/people_now.json",
+      "connection": "wrdsbbabbage_STORAGE"
+    },
+    {
+      "name": "peoplePrevious",
+      "type": "blob",
+      "direction": "out",
+      "path": "ipps-people/people_previous.json",
+      "connection": "wrdsbbabbage_STORAGE"
+    }
+  ],
+  "disabled": false
+}
