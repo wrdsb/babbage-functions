@@ -1,5 +1,5 @@
 {
-  "name": "ipps_people",
+  "name": "ipps_people_difference",
   "version": "0.0.1",
   "description": "Calculates differences in person records from IPPS.",
   "main": "index.js",
