@@ -28,7 +28,7 @@ module.exports = function (context) {
     }
 
     function find_creates_and_updates(people_previous, people_now, changed_records, callback) {
-        // loop through all records in people_now, looking for changes
+        // loop through all records in people_now, each of which is a property of people_now, named for the record's EIN
         Object.getOwnPropertyNames(people_now).forEach(function (ein) {
             context.log('Processing EIN ' + ein);
             var new_record = people_now[ein];      // get the full person record from people_now
@@ -42,13 +42,14 @@ module.exports = function (context) {
                 var person_changed = false;
                 var person_changes = [];
 
+                // TODO: Make into a waterfall
                 var person_diff = diff_person(old_record, new_record, person_changed, person_changes);
                 person_changed = person_diff.person_changed;
                 person_changes = person_diff.person_changes;
     
-                var assignments_diff = diff_assignments(old_record, new_record, person_changed, person_changes);
-                person_changed = assignments_diff.person_changed;
-                person_changes = assignments_diff.person_changes;
+                var positions_diff = diff_positions(old_record, new_record, person_changed, person_changes);
+                person_changed = positions_diff.person_changed;
+                person_changes = positions_diff.person_changes;
     
                 // if person changed, add changes to total diff
                 if (person_changed) {
@@ -58,7 +59,7 @@ module.exports = function (context) {
                     console.log('No changes found for EIN ' + ein);
                 }
     
-                // remove old_record from people_previous
+                // remove old_record from people_previous to leave us with a diff. See find_deletes().
                 delete people_previous[ein];
     
             // if we don't find a corresponding record in people_previous, they're new
@@ -73,11 +74,10 @@ module.exports = function (context) {
     function find_deletes(people_previous, people_now, changed_records, callback) {
         // if we have any old records remaining, they didn't match a new record, so they must be deletes
         Object.getOwnPropertyNames(people_previous).forEach(function (ein) {
-            var old_record = people_previous[ein];
-    
             console.log('Found deleted record for EIN ' + ein);
-            changed_records[ein] = {delete: old_record};
+            changed_records[ein] = {delete: people_previous[ein]};
         });
+        // collect our total result, and pass to final function of main waterfall
         var result = {people_previous: people_previous, people_now: people_now, changed_records: changed_records};
         callback(null, result);
     }
@@ -162,88 +162,82 @@ module.exports = function (context) {
         return {person_changed: person_changed, person_changes: person_changes};
     }
 
-    function diff_assignments(old_record, new_record, person_changed, person_changes) {
-        var old_assignments = old_record.assignments;
-        var new_assignments = new_record.assignments;
+    function diff_positions(old_record, new_record, person_changed, person_changes) {
+        var old_positions = old_record.positions;
+        var new_positions = new_record.positions;
 
-        var created_assignments = [];
-        var updated_assignments = [];
-        var deleted_assignments = [];
+        var created_positions = {};
+        var updated_positions = {};
+        var deleted_positions = {};
 
-        new_assignments.forEach( function(new_assignment) {
-            if (!old_assignments.some( function(old_assignment, index, array) {
-                    return (old_assignment.ipps_position_id == new_assignment.ipps_position_id);
-            })) {
-                created_assignments.push(new_assignment);
+        Object.getOwnPropertyNames(new_positions).forEach(function (new_position_id) {
+            // if the same position isn't present in old_positions, it's a brand new position
+            if (!old_positions[new_position_id]) {
+                created_positions[new_position_id] = new_positions[new_position_id];
+            } else {
+                var old_position = old_positions[new_position_id];
+                var new_position = new_positions[new_position_id];
+                if (
+                    (old_position.ipps_job_code                   != new_position.ipps_job_code) ||
+                    (old_position.ipps_location_code              != new_position.ipps_location_code) ||
+                    (old_position.ipps_employee_group_code        != new_position.ipps_employee_group_code) ||
+                    (old_position.ipps_job_description            != new_position.ipps_job_description) ||
+                    (old_position.ipps_location_description       != new_position.ipps_location_description) ||
+                    (old_position.ipps_employee_group_category    != new_position.ipps_employee_group_category) ||
+                    (old_position.ipps_employee_group_description != new_position.ipps_employee_group_description) ||
+                    (old_position.ipps_school_code                != new_position.ipps_school_code) ||
+                    (old_position.ipps_school_type                != new_position.ipps_school_type) ||
+                    (old_position.ipps_panel                      != new_position.ipps_panel) ||
+                    (old_position.ipps_phone_no                   != new_position.ipps_phone_no) ||
+                    (old_position.ipps_extension                  != new_position.ipps_extension) ||
+                    (old_position.ipps_home_location_indicator    != new_position.ipps_home_location_indicator) ||
+                    (old_position.ipps_activity_code              != new_position.ipps_activity_code) ||
+                    (old_position.ipps_position_start_date        != new_position.ipps_position_start_date) ||
+                    (old_position.ipps_position_end_date          != new_position.ipps_position_end_date)
+                ) {
+                    updated_positions[new_position_id] = new_positions[new_position_id];
+                }
             }
         });
 
-        new_assignments.forEach( function(new_assignment) {
-            if (old_assignments.some( function(old_assignment, index, array) {
-                    return old_assignment.ipps_position_id == new_assignment.ipps_position_id &&
-                    (
-                        old_assignment.ipps_job_code                   != new_assignment.ipps_job_code ||
-                        old_assignment.ipps_location_code              != new_assignment.ipps_location_code ||
-                        old_assignment.ipps_employee_group_code        != new_assignment.ipps_employee_group_code ||
-                        old_assignment.ipps_job_description            != new_assignment.ipps_job_description ||
-                        old_assignment.ipps_location_description       != new_assignment.ipps_location_description ||
-                        old_assignment.ipps_employee_group_category    != new_assignment.ipps_employee_group_category ||
-                        old_assignment.ipps_employee_group_description != new_assignment.ipps_employee_group_description ||
-                        old_assignment.ipps_school_code                != new_assignment.ipps_school_code ||
-                        old_assignment.ipps_school_type                != new_assignment.ipps_school_type ||
-                        old_assignment.ipps_panel                      != new_assignment.ipps_panel ||
-                        old_assignment.ipps_phone_no                   != new_assignment.ipps_phone_no ||
-                        old_assignment.ipps_extension                  != new_assignment.ipps_extension ||
-                        old_assignment.ipps_home_location_indicator    != new_assignment.ipps_home_location_indicator ||
-                        old_assignment.ipps_activity_code              != new_assignment.ipps_activity_code ||
-                        old_assignment.ipps_position_start_date        != new_assignment.ipps_position_start_date ||
-                        old_assignment.ipps_position_end_date          != new_assignment.ipps_position_end_date
-                    );
-            })) {
-                updated_assignments.push(new_assignment);
+        Object.getOwnPropertyNames(old_positions).forEach(function (old_position_id) {
+            if (!new_positions[old_position_id]) {
+                deleted_positions[old_position_id] = old_positions[old_position_id];
             }
         });
 
-        old_assignments.forEach( function(old_assignment) {
-            if (!new_assignments.some( function(new_assignment, index, array) {
-                    return (new_assignment.ipps_position_id == old_assignment.ipps_position_id);
-            })) {
-                deleted_assignments.push(old_assignment);
-            }
-        });
-
-        if (created_assignments.length > 0) {
+        if (Object.getOwnPropertyNames(created_positions).length > 0) {
             person_changed = true;
             person_changes.push({
-                created_assignments: created_assignments
+                created_positions: created_positions
             });
         }
 
-        if (updated_assignments.length > 0) {
+        if (Object.getOwnPropertyNames(updated_positions).length > 0) {
             person_changed = true;
             person_changes.push({
-                updated_assignments: updated_assignments
+                updated_positions: updated_positions
             });
         }
 
-        if (deleted_assignments.length > 0) {
+        if (Object.getOwnPropertyNames(deleted_positions).length > 0) {
             person_changed = true;
             person_changes.push({
-                deleted_assignments: deleted_assignments
+                deleted_positions: deleted_positions
             });
         }
         return {person_changed: person_changed, person_changes: person_changes};
     }
 
-    function is_new_assignment(assignment, index, array) {
+    function is_new_position(position, index, array) {
         
     }
 
-    function is_updated_assignment(assignment, index, array) {
+    function is_updated_position(position, index, array) {
         
     }
 
-    function is_removed_assignment(assignment, index, array) {
+    function is_removed_position(position, index, array) {
         
     }
 };
