@@ -176,7 +176,7 @@ module.exports = function (context) {
 
             // if the same position isn't present in old_positions, it's a brand new position
             if (!old_position) {
-                created_positions[new_position_id] = new_positions[new_position_id];
+                created_positions[new_position_id] = new_position;
             } else {
                 if (
                     (old_position.ipps_job_code                   != new_position.ipps_job_code) ||
@@ -192,8 +192,8 @@ module.exports = function (context) {
                     (old_position.ipps_phone_no                   != new_position.ipps_phone_no) ||
                     (old_position.ipps_extension                  != new_position.ipps_extension) ||
                     (old_position.ipps_home_location_indicator    != new_position.ipps_home_location_indicator) ||
-                    (old_position.ipps_activity_code              != new_position.ipps_activity_code) ||
-                    (old_position.ipps_position_start_date        != new_position.ipps_position_start_date) // ||
+                    (old_position.ipps_activity_code              != new_position.ipps_activity_code) // ||
+                    //(old_position.ipps_position_start_date        != new_position.ipps_position_start_date) ||
                     //(old_position.ipps_position_end_date          != new_position.ipps_position_end_date)
                 ) {
                     updated_positions[new_position_id] = {old_position: old_position, new_position: new_position};
