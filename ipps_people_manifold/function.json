@@ -1,0 +1,12 @@
+{
+  "bindings": [
+    {
+      "name": "peopleDiffQueue",
+      "type": "queueTrigger",
+      "direction": "in",
+      "queueName": "people-diff",
+      "connection": "wrdsbbabbage_STORAGE"
+    }
+  ],
+  "disabled": false
+}
