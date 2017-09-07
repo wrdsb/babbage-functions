@@ -1,0 +1,12 @@
+{
+  "bindings": [
+    {
+      "name": "peopleDiff",
+      "type": "blobTrigger",
+      "direction": "in",
+      "path": "ipps-people/people_diff.json",
+      "connection": "wrdsbbabbage_STORAGE"
+    }
+  ],
+  "disabled": false
+}

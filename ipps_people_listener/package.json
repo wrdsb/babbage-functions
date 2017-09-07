@@ -1,0 +1,13 @@
+{
+  "name": "ipps_people_listener",
+  "version": "0.0.1",
+  "description": "Listens for changes to people_diff.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+  }
+}
