@@ -196,7 +196,7 @@ module.exports = function (context) {
                     (old_position.ipps_position_start_date        != new_position.ipps_position_start_date) ||
                     (old_position.ipps_position_end_date          != new_position.ipps_position_end_date)
                 ) {
-                    updated_positions[new_position_id] = new_positions[new_position_id];
+                    updated_positions[new_position_id] = {old_position: old_position, new_position: new_position};
                 }
             }
         });
