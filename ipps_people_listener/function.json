@@ -6,6 +6,13 @@
       "direction": "in",
       "path": "ipps-people/people_diff.json",
       "connection": "wrdsbbabbage_STORAGE"
+    },
+    {
+      "type": "queue",
+      "name": "peopleDiffQueue",
+      "queueName": "people-diff",
+      "connection": "wrdsbbabbage_STORAGE",
+      "direction": "out"
     }
   ],
   "disabled": false
