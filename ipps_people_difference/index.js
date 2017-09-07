@@ -171,12 +171,13 @@ module.exports = function (context) {
         var deleted_positions = {};
 
         Object.getOwnPropertyNames(new_positions).forEach(function (new_position_id) {
+            var old_position = old_positions[new_position_id];
+            var new_position = new_positions[new_position_id];
+
             // if the same position isn't present in old_positions, it's a brand new position
-            if (!old_positions[new_position_id]) {
+            if (!old_position) {
                 created_positions[new_position_id] = new_positions[new_position_id];
             } else {
-                var old_position = old_positions[new_position_id];
-                var new_position = new_positions[new_position_id];
                 if (
                     (old_position.ipps_job_code                   != new_position.ipps_job_code) ||
                     (old_position.ipps_location_code              != new_position.ipps_location_code) ||
