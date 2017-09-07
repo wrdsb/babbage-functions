@@ -8,7 +8,7 @@ module.exports = function(context) {
             ein: ein,
             change: people_diff[ein]
         };
-        queue_messages.push(diff);
+        queue_messages.push(JSON.stringify(diff));
     });
 
     context.bindings.peopleDiffQueue = queue_messages;
