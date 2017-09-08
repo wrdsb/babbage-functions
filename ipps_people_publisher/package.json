@@ -1,7 +1,7 @@
 {
-  "name": "ipps_people_listener",
+  "name": "ipps_people_publisher",
   "version": "0.0.1",
-  "description": "Listens for changes to people_diff.",
+  "description": "Splits changes from the people_diff blob into individual changes, and publishes them to Babbage's people-diff storage queue",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
