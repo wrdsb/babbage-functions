@@ -1,0 +1,23 @@
+module.exports = function (context) {
+    var group_address = context.bindingData.filename;
+
+    context.log('Publishing diffs for ' + group_address);
+
+    var missing_memberships = context.bindings.membershipsDiff.missing_memberships;
+    var extra_memberships = context.bindings.membershipsDiff.extra_memberships;
+
+    var message = {};
+    
+    message[group_address] = {};
+    
+    if (missing_memberships) {
+        message[group_address]['missing_memberships'] = missing_memberships;
+    }
+    if (extra_memberships) {
+        message[group_address]['extra_memberships'] = extra_memberships;
+    }
+
+    context.log(message);
+    context.bindings.membershipsDiffQueue = message;
+    context.done();
+};

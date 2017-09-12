@@ -1,0 +1,13 @@
+{
+  "name": "group_memberships_publisher",
+  "version": "0.0.1",
+  "description": "Publishes differences from groups-memberships-differences blob storage to Babbage's groups_memberships_differences ServiceBus queue.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+  }
+}
