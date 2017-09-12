@@ -1,14 +1,14 @@
 {
   "bindings": [
     {
-      "name": "membershipsIdeal",
+      "name": "membershipsActual",
       "type": "blobTrigger",
       "direction": "in",
       "path": "groups-memberships/{schoolCode}-{groupSlug}@wrdsb.ca.json",
       "connection": "wrdsbbabbage_STORAGE"
     },
     {
-      "name": "membershipsActual",
+      "name": "membershipsIdeal",
       "type": "blob",
       "direction": "in",
       "path": "member-list/{schoolCode}-{groupsSlug}@wrdsb.ca.json",
