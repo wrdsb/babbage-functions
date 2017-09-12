@@ -6,7 +6,7 @@
       "direction": "in",
       "path": "groups-memberships-differences/{filename}",
       "connection": "wrdsbbabbage_STORAGE"
-    }
+    },
     {
       "name": "membershipsDiffTopic",
       "type": "serviceBus",
