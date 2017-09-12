@@ -8,9 +8,11 @@
       "connection": "wrdsbbabbage_STORAGE"
     }
     {
-      "name": "membershipsDiffQueue",
+      "name": "membershipsDiffTopic",
       "type": "serviceBus",
-      "queueName": "groups_memberships_differences",
+      "topicName": "groups_memberships_differences",
+      "subscriptionName": "wrdsb-babbage",
+      "accessRights": "manage",
       "connection": "wrdsb-babbage_SERVICEBUS",
       "direction": "out"
     }

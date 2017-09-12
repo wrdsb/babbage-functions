@@ -18,6 +18,6 @@ module.exports = function (context) {
     }
 
     context.log(message);
-    context.bindings.membershipsDiffQueue = message;
+    context.bindings.membershipsDiffTopic = message;
     context.done();
 };
