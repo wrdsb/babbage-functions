@@ -8,13 +8,13 @@ module.exports = function (context) {
 
     var message = {};
     
-    message[group_address] = {};
+    message.group_address = group_address;
     
     if (missing_memberships) {
-        message[group_address]['missing_memberships'] = missing_memberships;
+        message.missing_memberships = missing_memberships;
     }
     if (extra_memberships) {
-        message[group_address]['extra_memberships'] = extra_memberships;
+        message.extra_memberships = extra_memberships;
     }
 
     context.log(message);
