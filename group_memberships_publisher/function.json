@@ -12,7 +12,7 @@
       "type": "serviceBus",
       "topicName": "groups_memberships_differences",
       "subscriptionName": "wrdsb-babbage",
-      "accessRights": "manage",
+      "accessRights": "Manage",
       "connection": "wrdsb-babbage_SERVICEBUS",
       "direction": "out"
     }
