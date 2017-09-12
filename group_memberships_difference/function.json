@@ -4,15 +4,15 @@
       "name": "membershipsActual",
       "type": "blobTrigger",
       "direction": "in",
-      "path": "groups-memberships/{filename}",
-      "connection": "wrdsbbabbage_STORAGE"
+      "path": "member-list/{filename}",
+      "connection": "wrdsbigor_STORAGE"
     },
     {
       "name": "membershipsIdeal",
       "type": "blob",
       "direction": "in",
-      "path": "member-list/{filename}",
-      "connection": "wrdsbigor_STORAGE"
+      "path": "groups-memberships/{filename}",
+      "connection": "wrdsbbabbage_STORAGE"
     },
     {
       "name": "membershipsDiff",
