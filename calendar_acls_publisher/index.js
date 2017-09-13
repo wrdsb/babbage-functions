@@ -3,8 +3,8 @@ module.exports = function (context) {
 
     context.log('Publishing diffs for ' + calendar_id);
 
-    var missing_memberships = context.bindings.membershipsDiff.missing_memberships;
-    var extra_memberships = context.bindings.membershipsDiff.extra_memberships;
+    var missing_memberships = context.bindings.aclsDiff.missing_memberships;
+    var extra_memberships = context.bindings.aclsDiff.extra_memberships;
 
     var message = {};
     
@@ -18,6 +18,6 @@ module.exports = function (context) {
     }
 
     context.log(message);
-    context.bindings.membershipsDiffTopic = message;
+    context.bindings.aclsDiffTopic = message;
     context.done();
 };
