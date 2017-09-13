@@ -41,7 +41,7 @@ module.exports = function (context) {
 
     if (diff_found) {
         context.log(diff);
-        context.bindings.membershipsDiff = diff;
+        context.bindings.aclsDiff = diff;
     }
     context.done();
 };
