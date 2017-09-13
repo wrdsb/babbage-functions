@@ -1,0 +1,13 @@
+{
+  "name": "calendar_acls_publisher",
+  "version": "0.0.1",
+  "description": "Publishes differences from calendar-acls-differences blob storage to Babbage's calendar_acls_differences ServiceBus queue.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+  }
+}
