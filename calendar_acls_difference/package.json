@@ -1,0 +1,16 @@
+{
+  "name": "calendar_acls_difference",
+  "version": "0.0.1",
+  "description": "Calculates differences in Calendar ACLs between IPPS (ideal) and Google (actual).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "async": "^2.5.0",
+    "google-auth-library": "^0.10.0",
+    "googleapis": "^19.0.0"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "bindings": [
+    {
+      "name": "aclsActual",
+      "type": "blobTrigger",
+      "direction": "in",
+      "path": "calendar-acls/{filename}",
+      "connection": "wrdsbigor_STORAGE"
+    },
+    {
+      "name": "aclsIdeal",
+      "type": "blob",
+      "direction": "in",
+      "path": "calendar-acls/{filename}",
+      "connection": "wrdsbbabbage_STORAGE"
+    },
+    {
+      "name": "aclsDiff",
+      "type": "blob",
+      "direction": "out",
+      "path": "calendar-acls-differences/{filename}",
+      "connection": "wrdsbbabbage_STORAGE"
+    }
+  ],
+  "disabled": false
+}
