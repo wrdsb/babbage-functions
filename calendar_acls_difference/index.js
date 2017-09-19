@@ -3,6 +3,7 @@ module.exports = function (context) {
     var memberships_ideal = context.bindings.aclsIdeal;
     var memberships_actual = context.bindings.aclsActual;
     var filename = context.bindingData.filename;
+    var calendar_id = filename.replace('.json', '');
 
     // objects to store our diff parts
     var missing_memberships = {};
@@ -10,7 +11,7 @@ module.exports = function (context) {
     var diff = {};
     var diff_found = false;
 
-    context.log('Processing data for ' + filename);
+    context.log('Processing data for ' + calendar_id);
 
     Object.getOwnPropertyNames(memberships_ideal).forEach(function (member) {
         if (!memberships_actual[member]) {

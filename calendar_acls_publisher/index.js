@@ -1,5 +1,5 @@
 module.exports = function (context) {
-    var calendar_id = context.bindingData.filename;
+    var calendar_id = context.bindingData.filename.replace('.json', '');
 
     context.log('Publishing diffs for ' + calendar_id);
 
