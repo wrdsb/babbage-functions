@@ -13,10 +13,6 @@ module.exports = function (context) {
         return;
     }
     var memberships_diff = context.bindings.membershipsDiff;
-    if (!memberships_diff) {
-        context.done('memberships_diff file not found for ' + filename);
-        return;
-    }
 
     // objects to store our diff parts
     var missing_memberships = {};
