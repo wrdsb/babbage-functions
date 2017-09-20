@@ -5,14 +5,17 @@ module.exports = function (context) {
     var memberships_ideal = context.bindings.membershipsIdeal;
     if (!memberships_ideal) {
         context.done('memberships_ideal file not found for ' + filename);
+        return;
     }
     var memberships_actual = context.bindings.membershipsActual;
     if (!memberships_actual) {
         context.done('memberships_actual file not found for ' + filename);
+        return;
     }
     var memberships_diff = context.bindings.membershipsDiff;
     if (!memberships_diff) {
         context.done('memberships_diff file not found for ' + filename);
+        return;
     }
 
     // objects to store our diff parts
