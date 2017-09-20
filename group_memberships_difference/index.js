@@ -1,8 +1,19 @@
 module.exports = function (context) {
     // give our bindings more human-readable names
-    var memberships_ideal = context.bindings.membershipsIdeal;
-    var memberships_actual = context.bindings.membershipsActual;
     var filename = context.bindingData.filename;
+
+    var memberships_ideal = context.bindings.membershipsIdeal;
+    if (!memberships_ideal) {
+        context.done('memberships_ideal file not found for ' + filename);
+    }
+    var memberships_actual = context.bindings.membershipsActual;
+    if (!memberships_actual) {
+        context.done('memberships_actual file not found for ' + filename);
+    }
+    var memberships_diff = context.bindings.membershipsDiff;
+    if (!memberships_diff) {
+        context.done('memberships_diff file not found for ' + filename);
+    }
 
     // objects to store our diff parts
     var missing_memberships = {};
@@ -41,7 +52,7 @@ module.exports = function (context) {
 
     if (diff_found) {
         context.log(diff);
-        context.bindings.membershipsDiff = diff;
+        memberships_diff = diff;
     }
     context.done();
 };
