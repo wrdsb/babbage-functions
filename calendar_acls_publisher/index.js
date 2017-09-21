@@ -19,5 +19,5 @@ module.exports = function (context) {
 
     context.log(message);
     context.bindings.aclsDiffTopic = message;
-    context.done();
+    context.done(null, 'Publishing diffs for ' + calendar_id);
 };

@@ -19,5 +19,5 @@ module.exports = function (context) {
 
     context.log(message);
     context.bindings.membershipsDiffTopic = message;
-    context.done();
+    context.done(null, 'Publishing diffs for ' + group_address);
 };

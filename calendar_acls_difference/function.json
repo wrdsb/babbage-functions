@@ -20,6 +20,14 @@
       "direction": "out",
       "path": "calendar-acls-differences/{filename}",
       "connection": "wrdsbbabbage_STORAGE"
+    },
+    {
+      "name" : "$return",
+      "type" : "serviceBus",
+      "queueName" : "log_to_slack",
+      "connection" : "wrdsb-babbage_SERVICEBUS",
+      "accessRights" : "manage",
+      "direction" : "out"
     }
   ],
   "disabled": false

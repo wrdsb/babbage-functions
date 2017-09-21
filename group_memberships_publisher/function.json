@@ -15,6 +15,14 @@
       "accessRights": "Manage",
       "connection": "wrdsb-babbage_SERVICEBUS",
       "direction": "out"
+    },
+    {
+      "name" : "$return",
+      "type" : "serviceBus",
+      "queueName" : "log_to_slack",
+      "connection" : "wrdsb-babbage_SERVICEBUS",
+      "accessRights" : "manage",
+      "direction" : "out"
     }
   ],
   "disabled": false
