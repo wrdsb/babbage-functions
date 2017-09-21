@@ -44,5 +44,5 @@ module.exports = function (context) {
         context.log(diff);
         context.bindings.aclsDiff = diff;
     }
-    context.done();
+    context.done(null, 'Processing data for ' + calendar_id);
 };

@@ -52,5 +52,5 @@ module.exports = function (context) {
         context.log(diff);
         context.bindings.membershipsDiff = diff;
     }
-    context.done();
+    context.done(null, 'Processing data for ' + filename);
 };
