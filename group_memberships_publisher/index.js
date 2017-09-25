@@ -1,5 +1,5 @@
 module.exports = function (context) {
-    var group_address = context.bindingData.filename;
+    var group_address = context.bindingData.filename.replace('.json', '');
 
     context.log('Publishing diffs for ' + group_address);
 
