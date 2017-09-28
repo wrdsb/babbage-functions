@@ -24,7 +24,7 @@
     {
       "name": "membershipsSupplementalAll",
       "type": "blob",
-      "direction": "out",
+      "direction": "in",
       "path": "groups-memberships-supplemental/all.json",
       "connection": "wrdsbbabbage_STORAGE"
     },
