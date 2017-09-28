@@ -1,6 +1,12 @@
 module.exports = function (context) {
     // give our bindings more human-readable names
     var filename = context.bindingData.filename;
+    var group_address = context.bindingData.filename.replace('.json', '');
+
+    var all_supplemental = context.bindings.membershipsSupplementalAll;
+    if (!all_supplemental[group_address]) {
+        all_supplemental[group_address] = [];
+    }
 
     var memberships_ideal = context.bindings.membershipsIdeal;
     if (!memberships_ideal) {
@@ -34,6 +40,7 @@ module.exports = function (context) {
         if (!memberships_ideal[member]) {
             console.log('Found extra member: ' + member);
             extra_memberships[member] = memberships_actual[member];
+            all_supplemental[group_address].push(member);
         } else {
             //context.log('Found '+ member +' in '+ filename);
         }
@@ -52,6 +59,7 @@ module.exports = function (context) {
     if (diff_found) {
         context.log(diff);
         context.bindings.membershipsDiff = diff;
+        context.bindings.membershipsSupplementalAll = all_supplemental;
     }
     context.done(null, 'Processing data for ' + filename);
 };
