@@ -9,7 +9,7 @@
       "direction": "in"
     },
     {
-      "name": "res"
+      "name": "res",
       "type": "http",
       "direction": "out"
     }
