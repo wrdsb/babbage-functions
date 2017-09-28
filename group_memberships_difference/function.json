@@ -15,6 +15,13 @@
       "connection": "wrdsbbabbage_STORAGE"
     },
     {
+      "name": "membershipsSupplemental",
+      "type": "blob",
+      "direction": "out",
+      "path": "groups-memberships-supplemental/{filename}",
+      "connection": "wrdsbbabbage_STORAGE"
+    },
+    {
       "name": "membershipsDiff",
       "type": "blob",
       "direction": "out",

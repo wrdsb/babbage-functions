@@ -46,6 +46,7 @@ module.exports = function (context) {
     if (Object.getOwnPropertyNames(extra_memberships).length > 0) {
         diff.extra_memberships = extra_memberships;
         diff_found = true;
+        context.bindings.membershipsSupplemental = extra_memberships;
     }
 
     if (diff_found) {
