@@ -1,0 +1,26 @@
+{
+  "bindings": [
+    {
+      "name": "groupsListNow",
+      "type": "blobTrigger",
+      "direction": "in",
+      "path": "groups-lists/{filename}",
+      "connection": "wrdsbcodex_STORAGE"
+    },
+    {
+      "name": "groupsListPrevious",
+      "type": "blob",
+      "direction": "in",
+      "path": "groups-lists-previous/{filename}",
+      "connection": "wrdsbbabbage_STORAGE"
+    },
+    {
+      "name": "groupsListDiff",
+      "type": "blob",
+      "direction": "out",
+      "path": "groups-lists-differences/{filename}",
+      "connection": "wrdsbbabbage_STORAGE"
+    }
+  ],
+  "disabled": false
+}

@@ -1,0 +1,43 @@
+{
+    "bindings": [
+        {
+          "name": "groupsListDiff",
+          "type": "blobTrigger",
+          "direction": "in",
+          "path": "groups-lists-differences/{filename}",
+          "connection": "wrdsbbabbage_STORAGE"
+        },
+        {
+          "name": "groupsListNow",
+          "type": "blob",
+          "direction": "in",
+          "path": "groups-lists/{filename}",
+          "connection": "wrdsbcodex_STORAGE"
+        },
+        {
+          "name": "groupsListPrevious",
+          "type": "blob",
+          "direction": "out",
+          "path": "groups-lists-previous/{filename}",
+          "connection": "wrdsbbabbage_STORAGE"
+        },
+        {
+          "name": "groupsListDiffTopic",
+          "type": "serviceBus",
+          "topicName": "groups_lists_differences",
+          "subscriptionName": "wrdsb-babbage",
+          "connection": "wrdsb-babbage_SERVICEBUS",
+          "accessRights": "Manage",
+          "direction": "out"
+        },
+        {
+          "name": "skylineQueue",
+          "type": "serviceBus",
+          "queueName": "incoming_events",
+          "connection": "wrdsb-skyline_SERVICEBUS",
+          "accessRights": "Manage",
+          "direction": "out"
+        }
+    ],
+    "disabled": false
+}

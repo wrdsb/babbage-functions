@@ -1,0 +1,13 @@
+{
+  "name": "groups_lists_differences_handler",
+  "version": "0.0.1",
+  "description": "Watches for differences in lists of groups and then handles those differences.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+  }
+}
