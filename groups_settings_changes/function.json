@@ -18,7 +18,7 @@
       "name": "groupsSettingsDiff",
       "type": "blob",
       "direction": "out",
-      "path": "groups-settings-differences/{filename}",
+      "path": "groups-settings-changes/{filename}",
       "connection": "wrdsbbabbage_STORAGE"
     }
   ],

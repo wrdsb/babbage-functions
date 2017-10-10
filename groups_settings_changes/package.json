@@ -1,7 +1,7 @@
 {
-  "name": "groups_settings_differences",
+  "name": "groups_settings_changes",
   "version": "0.0.1",
-  "description": "Calculates differences in settings for a group.",
+  "description": "Calculates changes in settings for a group.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

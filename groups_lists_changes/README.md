@@ -1,5 +1,5 @@
-# Groups Lists Differences
-Calculates differences in lists of groups.
+# Groups Lists Changes
+Calculates changes in lists of groups.
 
         {
             created_groups: {

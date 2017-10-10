@@ -1,7 +1,7 @@
 {
-  "name": "groups_lists_differences",
+  "name": "groups_lists_changes",
   "version": "0.0.1",
-  "description": "Calculates differences in lists of groups.",
+  "description": "Calculates changes in lists of changes.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

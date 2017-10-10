@@ -4,7 +4,7 @@
           "name": "groupsListDiff",
           "type": "blobTrigger",
           "direction": "in",
-          "path": "groups-lists-differences/{filename}",
+          "path": "groups-lists-changes/{filename}",
           "connection": "wrdsbbabbage_STORAGE"
         },
         {
