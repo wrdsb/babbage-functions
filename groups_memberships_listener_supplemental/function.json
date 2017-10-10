@@ -1,0 +1,20 @@
+{
+    "bindings": [
+        {
+            "name": "membershipsFile",
+            "type": "blobTrigger",
+            "direction': "in",
+            "path": "groups-memberships-supplemental/{filename}",
+            "connection": "wrdsbcodex_STORAGE"
+        },
+        {
+            "name": "$return",
+            "type": "serviceBus",
+            "queueName": "calculate_groups_memberships_differences",
+            "connection": "wrdsb-babbage_SERVICEBUS",
+            "accessRights": "Manage",
+            "direction": "out"
+        }
+    ],
+    "disabled": false
+}
