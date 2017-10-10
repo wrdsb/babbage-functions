@@ -1,28 +1,39 @@
-module.exports = function (context) {
-    // give our bindings more human-readable names
-    var filename = context.bindingData.filename;
-    var group_address = context.bindingData.filename.replace('.json', '');
+module.exports = function (context, message) {
+    var azure = require('azure-storage');
+    var codexBlobService = azure.createBlobService(process.env['wrdsbcodex'], process.env['wrdsbcodex_storageKey']);
+    var babbageBlobService = azure.createBlobService(process.env['wrdsbbabbage'], process.env['wrdsbbabbage_storageKey']);
 
-    var memberships_actual = context.bindings.membershipsActual;
+    var group_name = message.group_email;
+    var filename = group_name + '.json';
+
+    context.log('Calculate membership differences for ' + group_name);
+
+    var memberships_actual       = JSON.parse(codexBlobService.getBlobToText('groups-memberships-actual', filename));
+    var memberships_central      = JSON.parse(codexBlobService.getBlobToText('groups-memberships-central', filename));
+    var memberships_ipps         = JSON.parse(codexBlobService.getBlobToText('groups-memberships-ipps', filename));
+    var memberships_supplemental = JSON.parse(codexBlobService.getBlobToText('groups-memberships-supplemental', filename));
+
     if (!memberships_actual) {
-        context.done('groups-memberships-actual file not found for ' + filename);
-        return;
-    }
-    var memberships_ipps = context.bindings.membershipsIPPS;
-    if (!memberships_ipps) {
-        context.done('groups-memberships-ipps file not found for ' + filename);
-        return;
-    }
-    var memberships_central = context.bindings.membershipsCentral;
-    if (!memberships_central[group_address]) {
-        memberships_central[group_address] = [];
-    }
-    var memberships_supplemental = context.bindings.membershipsSupplemental;
-    if (!memberships_supplemental[group_address]) {
-        memberships_supplemental[group_address] = [];
+        context.log('No groups-memberships-actual file found for ' + filename);
+        memberships_actual = {};
     }
 
-    var memberships_ideal = memberships_ipps.concat(memberships_central, memberships_supplemental);
+    if (!memberships_central) {
+        context.log('No groups-memberships-central file found for ' + filename);
+        memberships_central = {};
+    }
+
+    if (!memberships_ipps) {
+        context.log('No groups-memberships-ipps file found for ' + filename);
+        memberships_ipps = {};
+    }
+
+    if (!memberships_supplemental) {
+        context.log('No groups-memberships-supplemental file found for ' + filename);
+        memberships_supplemental = {};
+    }
+
+    var memberships_ideal = Object.assign(memberships_ipps, memberships_central, memberships_supplemental);
 
     // objects to store our diff parts
     var missing_memberships = {};
@@ -62,7 +73,15 @@ module.exports = function (context) {
 
     if (diff_found) {
         context.log(diff);
-        context.bindings.membershipsDiff = diff;
+        babbageBlobService.createBlockBlobFromText('groups-memberships-differences', filename, diff, function(error, result, response) {
+            if (!error) {
+                console.log(filename + ' uploaded');
+                console.log(result);
+                console.log(response);
+            } else {
+                console.log(error);
+            }
+        });
     }
-    context.done(null, 'Processing data for ' + filename);
+    context.done(null);
 };

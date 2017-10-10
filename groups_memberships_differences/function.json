@@ -1,39 +1,12 @@
 {
   "bindings": [
     {
-      "name": "membershipsActual",
-      "type": "blobTrigger",
-      "direction": "in",
-      "path": "groups-memberships-actual/{filename}",
-      "connection": "wrdsbcodex_STORAGE"
-    },
-    {
-      "name": "membershipsIPPS",
-      "type": "blob",
-      "direction": "in",
-      "path": "groups-memberships-ipps/{filename}",
-      "connection": "wrdsbcodex_STORAGE"
-    },
-    {
-      "name": "membershipsCentral",
-      "type": "blob",
-      "direction": "in",
-      "path": "groups-memberships-central/{filename}",
-      "connection": "wrdsbcodex_STORAGE"
-    },
-    {
-      "name": "membershipsSupplemental",
-      "type": "blob",
-      "direction": "out",
-      "path": "groups-memberships-supplemental/{filename}",
-      "connection": "wrdsbcodex_STORAGE"
-    },
-    {
-      "name": "membershipsDiff",
-      "type": "blob",
-      "direction": "out",
-      "path": "groups-memberships-differences/{filename}",
-      "connection": "wrdsbbabbage_STORAGE"
+      "type": "serviceBusTrigger",
+      "name": "message",
+      "queueName": "calculate_groups_memberships_differences",
+      "connection": "wrdsb-babbage_SERVICEBUS",
+      "accessRights": "listen",
+      "direction": "in"
     }
   ],
   "disabled": false
