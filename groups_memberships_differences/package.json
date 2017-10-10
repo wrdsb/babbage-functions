@@ -1,5 +1,5 @@
 {
-  "name": "group_memberships_difference",
+  "name": "groups_memberships_differences",
   "version": "0.0.1",
   "description": "Calculates differences in group memberships between IPPS (ideal) and Google (actual).",
   "main": "index.js",

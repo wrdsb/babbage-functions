@@ -3,21 +3,26 @@ module.exports = function (context) {
     var filename = context.bindingData.filename;
     var group_address = context.bindingData.filename.replace('.json', '');
 
-    var all_supplemental = context.bindings.membershipsSupplementalAll;
-    if (!all_supplemental[group_address]) {
-        all_supplemental[group_address] = [];
-    }
-
-    var memberships_ideal = context.bindings.membershipsIdeal;
-    if (!memberships_ideal) {
-        context.done('memberships_ideal file not found for ' + filename);
-        return;
-    }
     var memberships_actual = context.bindings.membershipsActual;
     if (!memberships_actual) {
-        context.done('memberships_actual file not found for ' + filename);
+        context.done('groups-memberships-actual file not found for ' + filename);
         return;
     }
+    var memberships_ipps = context.bindings.membershipsIPPS;
+    if (!memberships_ipps) {
+        context.done('groups-memberships-ipps file not found for ' + filename);
+        return;
+    }
+    var memberships_central = context.bindings.membershipsCentral;
+    if (!memberships_central[group_address]) {
+        memberships_central[group_address] = [];
+    }
+    var memberships_supplemental = context.bindings.membershipsSupplemental;
+    if (!memberships_supplemental[group_address]) {
+        memberships_supplemental[group_address] = [];
+    }
+
+    var memberships_ideal = memberships_ipps.concat(memberships_central, memberships_supplemental);
 
     // objects to store our diff parts
     var missing_memberships = {};
@@ -40,7 +45,6 @@ module.exports = function (context) {
         if (!memberships_ideal[member]) {
             console.log('Found extra member: ' + member);
             extra_memberships[member] = memberships_actual[member];
-            all_supplemental[group_address].push(member);
         } else {
             //context.log('Found '+ member +' in '+ filename);
         }
@@ -59,7 +63,6 @@ module.exports = function (context) {
     if (diff_found) {
         context.log(diff);
         context.bindings.membershipsDiff = diff;
-        context.bindings.membershipsSupplementalAll = all_supplemental;
     }
     context.done(null, 'Processing data for ' + filename);
 };
