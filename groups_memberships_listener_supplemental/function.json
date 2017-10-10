@@ -3,7 +3,7 @@
         {
             "name": "membershipsFile",
             "type": "blobTrigger",
-            "direction': "in",
+            "direction": "in",
             "path": "groups-memberships-supplemental/{filename}",
             "connection": "wrdsbcodex_STORAGE"
         },
