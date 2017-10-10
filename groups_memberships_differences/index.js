@@ -15,21 +15,41 @@ module.exports = function (context, message) {
 
     if (!memberships_actual) {
         context.log('No groups-memberships-actual file found for ' + filename);
+        codexBlobService.createBlockBlobFromText('groups-memberships-actual', filename, '{}', function(error, result, response){
+            if(!error){
+                // file uploaded
+            }
+        });
         memberships_actual = {};
     }
 
     if (!memberships_central) {
         context.log('No groups-memberships-central file found for ' + filename);
+        codexBlobService.createBlockBlobFromText('groups-memberships-central', filename, '{}', function(error, result, response){
+            if(!error){
+                // file uploaded
+            }
+        });
         memberships_central = {};
     }
 
     if (!memberships_ipps) {
         context.log('No groups-memberships-ipps file found for ' + filename);
+        codexBlobService.createBlockBlobFromText('groups-memberships-ipps', filename, '{}', function(error, result, response){
+            if(!error){
+                // file uploaded
+            }
+        });
         memberships_ipps = {};
     }
 
     if (!memberships_supplemental) {
         context.log('No groups-memberships-supplemental file found for ' + filename);
+        codexBlobService.createBlockBlobFromText('groups-memberships-supplemental', filename, '{}', function(error, result, response){
+            if(!error){
+                // file uploaded
+            }
+        });
         memberships_supplemental = {};
     }
 
