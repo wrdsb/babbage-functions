@@ -1,7 +1,7 @@
 module.exports = function (context, message) {
     var azure = require('azure-storage');
-    var codexBlobService = azure.createBlobService(process.env['wrdsbcodex'], process.env['wrdsbcodex_storageKey']);
-    var babbageBlobService = azure.createBlobService(process.env['wrdsbbabbage'], process.env['wrdsbbabbage_storageKey']);
+    var codexBlobService = azure.createBlobService(process.env.wrdsbcodex, process.env.wrdsbcodex_storageKey);
+    var babbageBlobService = azure.createBlobService(process.env.wrdsbbabbage, process.env.wrdsbbabbage_storageKey);
 
     var group_name = message.group_email;
     var filename = group_name + '.json';
