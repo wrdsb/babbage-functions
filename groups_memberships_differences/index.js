@@ -1,25 +1,26 @@
 module.exports = function (context, message) {
-    var async = require('async');
-    var azure = require('azure-storage');
-    var codexBlobService = azure.createBlobService('wrdsbcodex', process.env["wrdsbcodex_storageKey"]);
-    var babbageBlobService = azure.createBlobService('wrdsbbabbage', process.env["wrdsbbabbage_storageKey"]);
-
     var group_name = message.group_email;
     var filename = group_name + '.json';
+    context.log('Calculate membership differences for ' + group_name);
+
+    var async = require('async');
+    var azure = require('azure-storage');
+
     var memberships_actual = {};
     var memberships_central = {};
     var memberships_ipps = {};
     var memberships_supplemental = {};
     var memberships_ideal = {};
 
-    context.log('Calculate membership differences for ' + group_name);
-
     async.waterfall([
-       fetchBlobs,
-       parseBlobs,
-       calculateDifferences
+        codex_handshake,
+        fetchBlobs,
+        parseBlobs,
+        calculateDifferences
     ], function (error, diff) {
         context.log(diff);
+        //context.log('babbage handshake');
+        //var babbageBlobService = azure.createBlobService('wrdsbbabbage', process.env["wrdsbbabbage_storageKey"]);
         // babbageBlobService.createBlockBlobFromText('groups-memberships-differences', filename, diff, function(error, result, response) {
             // if (!error) {
                 // console.log(filename + ' uploaded');
@@ -32,10 +33,17 @@ module.exports = function (context, message) {
         context.done(null);
     });
 
-    function fetchBlobs(callback) {
+    function codex_handshake (callback) {
+        context.log('codex handshake');
+        var codexBlobService = azure.createBlobService('wrdsbcodex', process.env["wrdsbcodex_storageKey"]);
+        callback(null, codexBlobService);
+    }
+
+    function fetchBlobs(codexBlobService, callback) {
         async.parallel({
             groups_memberships_actual: async.reflect(function(callback) {
-                var blob = codexBlobService.getBlobToText('groups-memberships-actual', filename, function(error, result, response) {
+                context.log('Fetch groups-memberships-actual/' + filename);
+                codexBlobService.getBlobToText('groups-memberships-actual', filename, function(error, result, response) {
                     if (error) {
                         if (error.statusCode == 404) {
                             context.log('No groups-memberships-actual file found for ' + filename);
@@ -46,19 +54,19 @@ module.exports = function (context, message) {
                                     context.log('Error creating empty groups-memberships-actual file for ' + filename);
                                 }
                             });
-                            blob = JSON.stringify({});
-                            callback(null, blob);
+                            callback(null, JSON.stringify({}));
                         } else {
                             callback(error);
                         }
                     } else {
                         context.log('Found groups-memberships-actual file for ' + filename);
-                        callback(null, blob);
+                        callback(null, result);
                     }
                 });
             }),
             groups_memberships_central: async.reflect(function(callback) {
-                var blob = codexBlobService.getBlobToText('groups-memberships-central', filename, function(error, result, response) {
+                context.log('Fetch groups-memberships-central/' + filename);
+                codexBlobService.getBlobToText('groups-memberships-central', filename, function(error, result, response) {
                     if (error) {
                         if (error.statusCode == 404) {
                             context.log('No groups-memberships-central file found for ' + filename);
@@ -69,19 +77,19 @@ module.exports = function (context, message) {
                                     context.log('Error creating empty groups-memberships-central file for ' + filename);
                                 }
                             });
-                            blob = JSON.stringify({});
-                            callback(null, blob);
+                            callback(null, JSON.stringify({}));
                         } else {
                             callback(error);
                         }
                     } else {
                         context.log('Found groups-memberships-central file for ' + filename);
-                        callback(null, blob);
+                        callback(null, result);
                     }
                 });
             }),
             groups_memberships_ipps: async.reflect(function(callback) {
-                var blob = codexBlobService.getBlobToText('groups-memberships-ipps', filename, function(error, result, response) {
+                context.log('Fetch groups-memberships-ipps/' + filename);
+                codexBlobService.getBlobToText('groups-memberships-ipps', filename, function(error, result, response) {
                     if (error) {
                         if (error.statusCode == 404) {
                             context.log('No groups-memberships-ipps file found for ' + filename);
@@ -92,19 +100,19 @@ module.exports = function (context, message) {
                                     context.log('Error creating empty groups-memberships-ipps file for ' + filename);
                                 }
                             });
-                            blob = JSON.stringify({});
-                            callback(null, blob);
+                            callback(null, JSON.stringify({}));
                         } else {
                             callback(error);
                         }
                     } else {
                         context.log('Found groups-memberships-ipps file for ' + filename);
-                        callback(null, blob);
+                        callback(null, result);
                     }
                 });
             }),
             groups_memberships_supplemental: async.reflect(function (callback) {
-                var blob = codexBlobService.getBlobToText('groups-memberships-supplemental', filename, function(error, result, response) {
+                context.log('Fetch groups-memberships-supplemental/' + filename);
+                codexBlobService.getBlobToText('groups-memberships-supplemental', filename, function(error, result, response) {
                     if (error) {
                         if (error.statusCode == 404) {
                             context.log('No groups-memberships-supplemental file found for ' + filename);
@@ -115,14 +123,13 @@ module.exports = function (context, message) {
                                     context.log('Error creating empty groups-memberships-supplemental file for ' + filename);
                                 }
                             });
-                            blob = JSON.stringify({});
-                            callback(null, blob);
+                            callback(null, JSON.stringify({}));
                         } else {
                             callback(error);
                         }
                     } else {
                         context.log('Found groups-memberships-supplemental file for ' + filename);
-                        callback(null, blob);
+                        callback(null, result);
                     }
                 });
             })
@@ -131,30 +138,27 @@ module.exports = function (context, message) {
                 context.log('Error retrieving groups-memberships-actual file for ' + filename);
                 context.log(results.groups_memberships_actual.error);
             } else {
-                
+                memberships_actual = results.groups_memberships_actual.value;
             }
             if (results.groups_memberships_central.error) {
                 context.log('Error retrieving groups-memberships-central file for ' + filename);
                 context.log(results.groups_memberships_central.error);
             } else {
-                
+                memberships_central = results.groups_memberships_central.value;
             }
             if (results.groups_memberships_ipps.error) {
                 context.log('Error retrieving groups-memberships-ipps file for ' + filename);
                 context.log(results.groups_memberships_ipps.error);
             } else {
-                
+                memberships_ipps = results.groups_memberships_ipps.value;
             }
             if (results.groups_memberships_supplemental.error) {
                 context.log('Error retrieving groups-memberships-supplemental file for ' + filename);
                 context.log(results.groups_memberships_supplemental.error);
             } else {
-                memberships_actual = results.groups_memberships_actual.value;
-                memberships_central = results.groups_memberships_central.value;
-                memberships_ipps = results.groups_memberships_ipps.value;
                 memberships_supplemental = results.groups_memberships_supplemental;
-                callback(null, memberships_actual, memberships_central, memberships_ipps, memberships_supplemental);
             }
+            callback(null, memberships_actual, memberships_central, memberships_ipps, memberships_supplemental);
         });
     }
 
