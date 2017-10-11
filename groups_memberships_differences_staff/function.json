@@ -1,0 +1,26 @@
+{
+  "bindings": [
+    {
+      "name": "membershipsActual",
+      "type": "blobTrigger",
+      "direction": "in",
+      "path": "groups-memberships-actual/{filename}",
+      "connection": "wrdsbcodex_STORAGE"
+    },
+    {
+      "name": "membershipsIdeal",
+      "type": "blob",
+      "direction": "in",
+      "path": "groups-memberships-ipps/{filename}",
+      "connection": "wrdsbcodex_STORAGE"
+    },
+    {
+      "name": "membershipsDiff",
+      "type": "blob",
+      "direction": "out",
+      "path": "groups-memberships-differences/{filename}",
+      "connection": "wrdsbbabbage_STORAGE"
+    }
+  ],
+  "disabled": false
+}
