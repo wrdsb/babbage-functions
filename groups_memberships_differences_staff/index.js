@@ -3,12 +3,6 @@ module.exports = function (context) {
     var filename = context.bindingData.filename;
     var group_address = context.bindingData.filename.replace('.json', '');
     
-    if (!group_address.includes('-staff@') && !group_address.includes('-staff-discussion@')) {
-        context.log('Not a staff group');
-        context.done();
-        return;
-    }
-
     var memberships_ideal = context.bindings.membershipsIdeal;
     if (!memberships_ideal) {
         context.done('memberships_ideal file not found for ' + filename);
@@ -23,6 +17,7 @@ module.exports = function (context) {
     // objects to store our diff parts
     var missing_memberships = {};
     var extra_memberships = {};
+    var changed_memberships = {};
     var diff = {};
     var diff_found = false;
 
