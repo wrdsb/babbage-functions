@@ -16,8 +16,8 @@ module.exports = function (context) {
 
     // objects to store our diff parts
     var missing_memberships = {};
-    var extra_memberships = {};
     var changed_memberships = {};
+    var extra_memberships = {};
     var diff = {};
     var diff_found = false;
 
@@ -45,10 +45,13 @@ module.exports = function (context) {
         diff.missing_memberships = missing_memberships;
         diff_found = true;
     }
+    if (Object.getOwnPropertyNames(changed_memberships).length > 0) {
+        diff.changed_memberships = changed_memberships;
+        diff_found = true;
+    }
     if (Object.getOwnPropertyNames(extra_memberships).length > 0) {
         diff.extra_memberships = extra_memberships;
         diff_found = true;
-        context.bindings.membershipsSupplemental = extra_memberships;
     }
 
     if (diff_found) {
