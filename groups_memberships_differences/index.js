@@ -52,6 +52,7 @@ module.exports = function (context, message) {
                             callback(error);
                         }
                     } else {
+                        context.log('Found groups-memberships-actual file for ' + filename);
                         callback(null, blob);
                     }
                 });
@@ -74,6 +75,7 @@ module.exports = function (context, message) {
                             callback(error);
                         }
                     } else {
+                        context.log('Found groups-memberships-central file for ' + filename);
                         callback(null, blob);
                     }
                 });
@@ -96,6 +98,7 @@ module.exports = function (context, message) {
                             callback(error);
                         }
                     } else {
+                        context.log('Found groups-memberships-ipps file for ' + filename);
                         callback(null, blob);
                     }
                 });
@@ -118,6 +121,7 @@ module.exports = function (context, message) {
                             callback(error);
                         }
                     } else {
+                        context.log('Found groups-memberships-supplemental file for ' + filename);
                         callback(null, blob);
                     }
                 });
@@ -149,11 +153,12 @@ module.exports = function (context, message) {
                 memberships_central = results.groups_memberships_central.value;
                 memberships_ipps = results.groups_memberships_ipps.value;
                 memberships_supplemental = results.groups_memberships_supplemental;
+                callback(null, memberships_actual, memberships_central, memberships_ipps, memberships_supplemental);
             }
         });
     }
 
-    function parseBlobs(callback) {
+    function parseBlobs(memberships_actual, memberships_central, memberships_ipps, memberships_supplemental, callback) {
         if (!memberships_actual) {
             memberships_actual = {};
         } else {
@@ -177,10 +182,11 @@ module.exports = function (context, message) {
         } else {
             memberships_supplemental = JSON.parse(memberships_supplemental);
         }
-        memberships_ideal = Object.assign(memberships_ipps, memberships_central, memberships_supplemental);
+        memberships_ideal = Object.assign(memberships_ipps, memberships_supplemental, memberships_central);
+        callback(null, memberships_ideal);
     }
 
-    function calculateDifferences(callback) {
+    function calculateDifferences(memberships_ideal, callback) {
         // objects to store our diff parts
         var missing_memberships = {};
         var extra_memberships = {};
