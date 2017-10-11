@@ -37,7 +37,20 @@ module.exports = function (context, message) {
             groups_memberships_actual: async.reflect(function(callback) {
                 var blob = codexBlobService.getBlobToText('groups-memberships-actual', filename, function(error, result, response) {
                     if (error) {
-                        callback(error);
+                        if (error.statusCode == 404) {
+                            context.log('No groups-memberships-actual file found for ' + filename);
+                            codexBlobService.createBlockBlobFromText('groups-memberships-actual', filename, '{}', function(error, result, response){
+                                if(!error){
+                                    context.log('Successfully created empty groups-memberships-actual file for ' + filename);
+                                } else {
+                                    context.log('Error creating empty groups-memberships-actual file for ' + filename);
+                                }
+                            });
+                            blob = JSON.stringify({});
+                            callback(null, blob);
+                        } else {
+                            callback(error);
+                        }
                     } else {
                         callback(null, blob);
                     }
@@ -46,7 +59,20 @@ module.exports = function (context, message) {
             groups_memberships_central: async.reflect(function(callback) {
                 var blob = codexBlobService.getBlobToText('groups-memberships-central', filename, function(error, result, response) {
                     if (error) {
-                        callback(error);
+                        if (error.statusCode == 404) {
+                            context.log('No groups-memberships-central file found for ' + filename);
+                            codexBlobService.createBlockBlobFromText('groups-memberships-central', filename, '{}', function(error, result, response){
+                                if(!error){
+                                    context.log('Successfully created empty groups-memberships-central file for ' + filename);
+                                } else {
+                                    context.log('Error creating empty groups-memberships-central file for ' + filename);
+                                }
+                            });
+                            blob = JSON.stringify({});
+                            callback(null, blob);
+                        } else {
+                            callback(error);
+                        }
                     } else {
                         callback(null, blob);
                     }
@@ -55,7 +81,20 @@ module.exports = function (context, message) {
             groups_memberships_ipps: async.reflect(function(callback) {
                 var blob = codexBlobService.getBlobToText('groups-memberships-ipps', filename, function(error, result, response) {
                     if (error) {
-                        callback(error);
+                        if (error.statusCode == 404) {
+                            context.log('No groups-memberships-ipps file found for ' + filename);
+                            codexBlobService.createBlockBlobFromText('groups-memberships-ipps', filename, '{}', function(error, result, response){
+                                if(!error){
+                                    context.log('Successfully created empty groups-memberships-ipps file for ' + filename);
+                                } else {
+                                    context.log('Error creating empty groups-memberships-ipps file for ' + filename);
+                                }
+                            });
+                            blob = JSON.stringify({});
+                            callback(null, blob);
+                        } else {
+                            callback(error);
+                        }
                     } else {
                         callback(null, blob);
                     }
@@ -64,7 +103,20 @@ module.exports = function (context, message) {
             groups_memberships_supplemental: async.reflect(function (callback) {
                 var blob = codexBlobService.getBlobToText('groups-memberships-supplemental', filename, function(error, result, response) {
                     if (error) {
-                        callback(error);
+                        if (error.statusCode == 404) {
+                            context.log('No groups-memberships-supplemental file found for ' + filename);
+                            codexBlobService.createBlockBlobFromText('groups-memberships-supplemental', filename, '{}', function(error, result, response){
+                                if(!error){
+                                    context.log('Successfully created empty groups-memberships-supplemental file for ' + filename);
+                                } else {
+                                    context.log('Error creating empty groups-memberships-supplemental file for ' + filename);
+                                }
+                            });
+                            blob = JSON.stringify({});
+                            callback(null, blob);
+                        } else {
+                            callback(error);
+                        }
                     } else {
                         callback(null, blob);
                     }
@@ -103,56 +155,24 @@ module.exports = function (context, message) {
 
     function parseBlobs(callback) {
         if (!memberships_actual) {
-            context.log('No groups-memberships-actual file found for ' + filename);
-            codexBlobService.createBlockBlobFromText('groups-memberships-actual', filename, '{}', function(error, result, response){
-                if(!error){
-                    context.log('Successfully created empty groups-memberships-actual file for ' + filename);
-                } else {
-                    context.log('Error creating empty groups-memberships-actual file for ' + filename);
-                }
-            });
             memberships_actual = {};
         } else {
             memberships_actual = JSON.parse(memberships_actual);
         }
     
         if (!memberships_central) {
-            context.log('No groups-memberships-central file found for ' + filename);
-            codexBlobService.createBlockBlobFromText('groups-memberships-central', filename, '{}', function(error, result, response){
-                if(!error){
-                    context.log('Successfully created empty groups-memberships-central file for ' + filename);
-                } else {
-                    context.log('Error creating empty groups-memberships-central file for ' + filename);
-                }
-            });
             memberships_central = {};
         } else {
             memberships_central = JSON.parse(memberships_central);
         }
     
         if (!memberships_ipps) {
-            context.log('No groups-memberships-ipps file found for ' + filename);
-            codexBlobService.createBlockBlobFromText('groups-memberships-ipps', filename, '{}', function(error, result, response){
-                if(!error){
-                    context.log('Successfully created empty groups-memberships-ipps file for ' + filename);
-                } else {
-                    context.log('Error creating empty groups-memberships-ipps file for ' + filename);
-                }
-            });
             memberships_ipps = {};
         } else {
             memberships_ipps = JSON.parse(memberships_ipps);
         }
     
         if (!memberships_supplemental) {
-            context.log('No groups-memberships-supplemental file found for ' + filename);
-            codexBlobService.createBlockBlobFromText('groups-memberships-supplemental', filename, '{}', function(error, result, response){
-                if(!error){
-                    context.log('Successfully created empty groups-memberships-supplemental file for ' + filename);
-                } else {
-                    context.log('Error creating empty groups-memberships-supplemental file for ' + filename);
-                }
-            });
             memberships_supplemental = {};
         } else {
             memberships_supplemental = JSON.parse(memberships_supplemental);
