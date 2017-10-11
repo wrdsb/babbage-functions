@@ -8,7 +8,7 @@
             "connection": "wrdsbcodex_STORAGE"
         },
         {
-            "name": "$return",
+            "name": "outputQueue",
             "type": "serviceBus",
             "queueName": "calculate_groups_memberships_differences",
             "connection": "wrdsb-babbage_SERVICEBUS",
