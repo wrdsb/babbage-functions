@@ -28,7 +28,9 @@ module.exports = function (context) {
             console.log('Did not find member: ' + member);
             missing_memberships[member] = memberships_ideal[member];
         } else {
-            //context.log('Found '+ member +' in '+ filename);
+            if (memberships_actual[member].role != memberships_ideal[member].role) {
+                context.log(memberships_actual[member].email +' role changed from '+ memberships_actual[member].role +' to '+ memberships_ideal[member].role +' in '+ filename);
+            }
         }
     });
 
@@ -36,8 +38,6 @@ module.exports = function (context) {
         if (!memberships_ideal[member]) {
             console.log('Found extra member: ' + member);
             extra_memberships[member] = memberships_actual[member];
-        } else {
-            //context.log('Found '+ member +' in '+ filename);
         }
     });
 
