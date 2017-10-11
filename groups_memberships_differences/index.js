@@ -6,6 +6,8 @@ module.exports = function (context, message) {
     var async = require('async');
     var azure = require('azure-storage');
 
+    context.log('loaded');
+
     var memberships_actual = {};
     var memberships_central = {};
     var memberships_ipps = {};
@@ -40,8 +42,8 @@ module.exports = function (context, message) {
     }
 
     function fetchBlobs(codexBlobService, callback) {
-        async.parallel({
-            groups_memberships_actual: async.reflect(function(callback) {
+        async.series({
+            groups_memberships_actual: function(callback) {
                 context.log('Fetch groups-memberships-actual/' + filename);
                 codexBlobService.getBlobToText('groups-memberships-actual', filename, function(error, result, response) {
                     if (error) {
@@ -63,8 +65,8 @@ module.exports = function (context, message) {
                         callback(null, result);
                     }
                 });
-            }),
-            groups_memberships_central: async.reflect(function(callback) {
+            },
+            groups_memberships_central: function(callback) {
                 context.log('Fetch groups-memberships-central/' + filename);
                 codexBlobService.getBlobToText('groups-memberships-central', filename, function(error, result, response) {
                     if (error) {
@@ -86,8 +88,8 @@ module.exports = function (context, message) {
                         callback(null, result);
                     }
                 });
-            }),
-            groups_memberships_ipps: async.reflect(function(callback) {
+            },
+            groups_memberships_ipps: function(callback) {
                 context.log('Fetch groups-memberships-ipps/' + filename);
                 codexBlobService.getBlobToText('groups-memberships-ipps', filename, function(error, result, response) {
                     if (error) {
@@ -109,8 +111,8 @@ module.exports = function (context, message) {
                         callback(null, result);
                     }
                 });
-            }),
-            groups_memberships_supplemental: async.reflect(function (callback) {
+            },
+            groups_memberships_supplemental: function (callback) {
                 context.log('Fetch groups-memberships-supplemental/' + filename);
                 codexBlobService.getBlobToText('groups-memberships-supplemental', filename, function(error, result, response) {
                     if (error) {
@@ -132,7 +134,7 @@ module.exports = function (context, message) {
                         callback(null, result);
                     }
                 });
-            })
+            }
         }, function(error, results) {
             if (results.groups_memberships_actual.error) {
                 context.log('Error retrieving groups-memberships-actual file for ' + filename);
