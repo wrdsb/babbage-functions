@@ -11,8 +11,8 @@
       "name": "aclsIdeal",
       "type": "blob",
       "direction": "in",
-      "path": "calendar-acls/{filename}",
-      "connection": "wrdsbbabbage_STORAGE"
+      "path": "calendar-acls-ipps/{filename}",
+      "connection": "wrdsbcodex_STORAGE"
     },
     {
       "name": "aclsDiff",
@@ -20,14 +20,6 @@
       "direction": "out",
       "path": "calendar-acls-differences/{filename}",
       "connection": "wrdsbbabbage_STORAGE"
-    },
-    {
-      "name" : "$return",
-      "type" : "serviceBus",
-      "queueName" : "log_to_slack",
-      "connection" : "wrdsb-babbage_SERVICEBUS",
-      "accessRights" : "manage",
-      "direction" : "out"
     }
   ],
   "disabled": false
