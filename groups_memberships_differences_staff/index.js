@@ -30,6 +30,7 @@ module.exports = function (context) {
         } else {
             if (memberships_actual[member].role != memberships_ideal[member].role) {
                 context.log(memberships_actual[member].email +' role changed from '+ memberships_actual[member].role +' to '+ memberships_ideal[member].role +' in '+ filename);
+                changed_memberships[member] = memberships_ideal[member];
             }
         }
     });
