@@ -8,10 +8,17 @@
       "connection": "wrdsbcodex_STORAGE"
     },
     {
-      "name": "membershipsIdeal",
+      "name": "membershipsIPPS",
       "type": "blob",
       "direction": "in",
       "path": "groups-memberships-ipps/{filename}",
+      "connection": "wrdsbcodex_STORAGE"
+    },
+    {
+      "name": "membershipsCentral",
+      "type": "blob",
+      "direction": "in",
+      "path": "groups-memberships-central/{filename}",
       "connection": "wrdsbcodex_STORAGE"
     },
     {

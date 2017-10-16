@@ -3,9 +3,14 @@ module.exports = function (context) {
     var filename = context.bindingData.filename;
     var group_address = context.bindingData.filename.replace('.json', '');
     
-    var memberships_ideal = context.bindings.membershipsIdeal;
-    if (!memberships_ideal) {
-        context.done('memberships_ideal file not found for ' + filename);
+    var memberships_ipps = context.bindings.membershipsIPPS;
+    if (!memberships_ipps) {
+        context.done('memberships_ipps file not found for ' + filename);
+        return;
+    }
+    var memberships_central = context.bindings.membershipsCentral;
+    if (!memberships_central) {
+        context.done('memberships_central file not found for ' + filename);
         return;
     }
     var memberships_actual = context.bindings.membershipsActual;
@@ -13,6 +18,8 @@ module.exports = function (context) {
         context.done('memberships_actual file not found for ' + filename);
         return;
     }
+
+    var memberships_ideal = Object.assign(memberships_ipps, memberships_central);
 
     // objects to store our diff parts
     var missing_memberships = {};
