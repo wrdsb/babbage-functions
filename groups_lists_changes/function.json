@@ -1,25 +1,43 @@
 {
   "bindings": [
     {
+      "name": "req",
+      "type": "httpTrigger",
+      "webHookType": "genericJson",
+      "direction": "in"
+    },
+    {
       "name": "groupsListNow",
-      "type": "blobTrigger",
+      "type": "blob",
       "direction": "in",
-      "path": "groups-lists/{filename}",
+      "path": "groups-lists/{list}-object.json",
       "connection": "wrdsbcodex_STORAGE"
     },
     {
       "name": "groupsListPrevious",
       "type": "blob",
       "direction": "in",
-      "path": "groups-lists-previous/{filename}",
+      "path": "groups-lists-previous/{list}-object.json",
       "connection": "wrdsbbabbage_STORAGE"
     },
     {
       "name": "groupsListDiff",
       "type": "blob",
       "direction": "out",
-      "path": "groups-lists-changes/{filename}",
+      "path": "groups-lists-changes/{list}-object.json",
       "connection": "wrdsbbabbage_STORAGE"
+    },
+    {
+      "name": "groupsListStats",
+      "type": "blob",
+      "direction": "out",
+      "path": "groups-lists-changes/{list}-stats-object.json",
+      "connection": "wrdsbbabbage_STORAGE"
+    },
+    {
+      "name": "res",
+      "type": "http",
+      "direction": "out"
     }
   ],
   "disabled": false

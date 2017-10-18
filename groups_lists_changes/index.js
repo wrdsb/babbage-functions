@@ -1,7 +1,6 @@
-module.exports = function (context) {
-    // give our bindings more human-readable names
-    var filename = context.bindingData.filename;
-    var group_name = filename.replace('.json', '');
+module.exports = function (context, data) {
+    var list = data.list;
+    var filename = list + '-object.json';
 
     var groups_list_now = context.bindings.groupsListNow;
     var groups_list_previous = context.bindings.groupsListPrevious;
@@ -19,16 +18,20 @@ module.exports = function (context) {
 
     // objects to store our diff parts
     var created_groups = {};
+    var created_groups_count = 0;
     var deleted_groups = {};
+    var deleted_groups_count = 0;
     var diff = {};
     var diff_found = false;
+    var stats = {};
 
-    context.log('Processing data for ' + filename);
+    context.log('Processing data for ' + list);
 
     Object.getOwnPropertyNames(groups_list_now).forEach(function (group) {
         if (!groups_list_previous[group]) {
             console.log('Found new group: ' + group);
             created_groups[group] = groups_list_now[group];
+            created_groups_count++;
         } else {
             //context.log();
         }
@@ -38,6 +41,7 @@ module.exports = function (context) {
         if (!groups_list_now[group]) {
             console.log('Found deleted group: ' + group);
             deleted_groups[group] = groups_list_previous[group];
+            deleted_groups_count++;
         } else {
             //context.log();
         }
@@ -46,15 +50,28 @@ module.exports = function (context) {
     if (Object.getOwnPropertyNames(created_groups).length > 0) {
         diff.created_groups = created_groups;
         diff_found = true;
+        stats.created_groups = created_groups_count;
     }
     if (Object.getOwnPropertyNames(deleted_groups).length > 0) {
         diff.deleted_groups = deleted_groups;
         diff_found = true;
+        stats.deleted_groups = deleted_groups_count;
     }
 
     if (diff_found) {
         context.log(diff);
-        context.bindings.groupsListDiff = diff;
+        context.log(stats);
+        context.bindings.groupsListDiff = JSON.stringify(diff);
+        context.bindings.groupsListStats = JSON.stringify(stats);
+        context.res = {
+            status: 200,
+            body: JSON.stringify(diff)
+        };
+    } else {
+        context.res = {
+            status: 200,
+            body: "null"
+        };
     }
     context.done();
 };
