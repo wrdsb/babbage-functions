@@ -23,7 +23,7 @@
     {
       "name": "groupSettingsDiff",
       "type": "blob",
-      "path": "groups-settings-changes/{group.json}",
+      "path": "groups-settings-changes/{group}.json",
       "connection": "wrdsbbabbage_STORAGE",
       "direction": "out"
     },
