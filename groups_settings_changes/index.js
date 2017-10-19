@@ -4,17 +4,6 @@ module.exports = function (context, data) {
     var group_settings_now = context.bindings.groupSettingsNow;
     var group_settings_previous = context.bindings.groupSettingsPrevious;
 
-    if (!group_settings_now) {
-        // TODO: missing file? create it and try again.
-        context.done('groups_settings_now file not found for ' + group_name);
-        return;
-    }
-    if (!group_settings_previous) {
-        // TODO: missing file? create it and try again.
-        context.done('groups_settings_previous file not found for ' + group_name);
-        return;
-    }
-
     // objects to store our diff parts
     var diff = {};
     var diff_found = false;
