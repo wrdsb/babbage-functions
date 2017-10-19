@@ -8,20 +8,6 @@
           "connection": "wrdsbbabbage_STORAGE"
         },
         {
-          "name": "groupsListNow",
-          "type": "blob",
-          "direction": "in",
-          "path": "groups-lists/{filename}",
-          "connection": "wrdsbcodex_STORAGE"
-        },
-        {
-          "name": "groupsListPrevious",
-          "type": "blob",
-          "direction": "out",
-          "path": "groups-lists-previous/{filename}",
-          "connection": "wrdsbbabbage_STORAGE"
-        },
-        {
           "name": "groupsListDiffTopic",
           "type": "serviceBus",
           "topicName": "groups_lists_differences",
