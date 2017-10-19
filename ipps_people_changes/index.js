@@ -40,7 +40,7 @@ module.exports = function (context) {
 
                 // track whether or not we found changes, and what they were
                 var person_changed = false;
-                var person_changes = [];
+                var person_changes = {};
 
                 // TODO: Make into a waterfall
                 var person_diff = diff_person(old_record, new_record, person_changed, person_changes);
@@ -86,78 +86,64 @@ module.exports = function (context) {
         // changed username?
         if (old_record.username != new_record.username) {
             person_changed = true;
-            person_changes.push({
-                username: {
-                    from: old_record.username,
-                    to: new_record.username
-                }
-            });
+            person_changes.username = {
+                from: old_record.username,
+                to: new_record.username
+            };
         }
 
         // changed email?
         if (old_record.email != new_record.email) {
             person_changed = true;
-            person_changes.push({
-                email: {
-                    from: old_record.email,
-                    to: new_record.email
-                }
-            });
+            person_changes.email = {
+                from: old_record.email,
+                to: new_record.email
+            };
         }
 
         // changed name?
         if (old_record.name != new_record.name) {
             person_changed = true;
-            person_changes.push({
-                name: {
-                    from: old_record.name,
-                    to: new_record.name
-                }
-            });
+            person_changes.name = {
+                from: old_record.name,
+                to: new_record.name
+            };
         }
 
         // changed sortable name?
         if (old_record.sortable_name != new_record.sortable_name) {
             person_changed = true;
-            person_changes.push({
-                sortable_name: {
-                    from: old_record.sortable_name,
-                    to: new_record.sortable_name
-                }
-            });
+            person_changes.sortable_name = {
+                from: old_record.sortable_name,
+                to: new_record.sortable_name
+            };
         }
 
         // changed first_name?
         if (old_record.first_name != new_record.first_name) {
             person_changed = true;
-            person_changes.push({
-                first_name: {
-                    from: old_record.first_name,
-                    to: new_record.first_name
-                }
-            });
+            person_changes.first_name = {
+                from: old_record.first_name,
+                to: new_record.first_name
+            };
         }
 
         // changed last_name?
         if (old_record.last_name != new_record.last_name) {
             person_changed = true;
-            person_changes.push({
-                last_name: {
-                    from: old_record.last_name,
-                    to: new_record.last_name
-                }
-            });
+            person_changes.last_name = {
+                from: old_record.last_name,
+                to: new_record.last_name
+            };
         }
 
         // changed ipps_home_location?
         if (old_record.ipps_home_location != new_record.ipps_home_location) {
             person_changed = true;
-            person_changes.push({
-                ipps_home_location: {
-                    from: old_record.ipps_home_location,
-                    to: new_record.ipps_home_location
-                }
-            });
+            person_changes.ipps_home_location = {
+                from: old_record.ipps_home_location,
+                to: new_record.ipps_home_location
+            };
         }
         return {person_changed: person_changed, person_changes: person_changes};
     }
@@ -211,23 +197,17 @@ module.exports = function (context) {
 
         if (Object.getOwnPropertyNames(created_positions).length > 0) {
             person_changed = true;
-            person_changes.push({
-                created_positions: created_positions
-            });
+            person_changes.created_positions = created_positions;
         }
 
         if (Object.getOwnPropertyNames(updated_positions).length > 0) {
             person_changed = true;
-            person_changes.push({
-                updated_positions: updated_positions
-            });
+            person_changes.updated_positions = updated_positions;
         }
 
         if (Object.getOwnPropertyNames(deleted_positions).length > 0) {
             person_changed = true;
-            person_changes.push({
-                deleted_positions: deleted_positions
-            });
+            person_changes.deleted_positions = deleted_positions;
         }
         return {person_changed: person_changed, person_changes: person_changes};
     }
