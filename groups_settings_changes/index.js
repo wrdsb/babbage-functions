@@ -4,9 +4,8 @@ module.exports = function (context, data) {
     var group_settings_now = context.bindings.groupSettingsNow;
     var group_settings_previous = context.bindings.groupSettingsPrevious;
 
-    // objects to store our diff parts
+    // object to store our diff parts
     var diff = {};
-    var diff_found = false;
 
     context.log('Processing data for ' + group_name);
 
@@ -14,22 +13,25 @@ module.exports = function (context, data) {
         if (group_settings_now[setting] != group_settings_previous[setting]) {
             console.log('Found changed setting: ' + setting);
             diff[setting] = {
-                was: group_settings_previous[setting],
-                is: group_settings_now[setting]
+                changed: {
+                    from: group_settings_previous[setting],
+                    to: group_settings_now[setting]
+                },
+                unchanged: false
             };
-            diff_found = true;
         } else {
-            //context.log();
+            diff[setting] = {
+                changed: null,
+                unchanged: true
+            };
         }
     });
 
-    if (diff_found) {
-        context.log(diff);
-        context.bindings.groupSettingsDiff = diff;
-        context.res = {
-            status: 200,
-            body: JSON.stringify(diff)
-        };
-    }
+    context.log(diff);
+    context.bindings.groupSettingsDiff = diff;
+    context.res = {
+        status: 200,
+        body: JSON.stringify(diff)
+    };
     context.done();
 };
