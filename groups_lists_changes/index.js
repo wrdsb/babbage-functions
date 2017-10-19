@@ -22,7 +22,6 @@ module.exports = function (context, data) {
     var deleted_groups = {};
     var deleted_groups_count = 0;
     var diff = {};
-    var diff_found = false;
     var stats = {};
 
     context.log('Processing data for ' + list);
@@ -49,29 +48,26 @@ module.exports = function (context, data) {
 
     if (Object.getOwnPropertyNames(created_groups).length > 0) {
         diff.created_groups = created_groups;
-        diff_found = true;
         stats.created_groups = created_groups_count;
+    } else {
+        diff.created_groups = null;
+        stats.created_groups = 0;
     }
     if (Object.getOwnPropertyNames(deleted_groups).length > 0) {
         diff.deleted_groups = deleted_groups;
-        diff_found = true;
         stats.deleted_groups = deleted_groups_count;
+    } else {
+        diff.deleted_groups = null;
+        stats.deleted_groups = 0;
     }
 
-    if (diff_found) {
-        context.log(diff);
-        context.log(stats);
-        context.bindings.groupsListDiff = JSON.stringify(diff);
-        context.bindings.groupsListStats = JSON.stringify(stats);
-        context.res = {
-            status: 200,
-            body: JSON.stringify(diff)
-        };
-    } else {
-        context.res = {
-            status: 200,
-            body: "null"
-        };
-    }
+    context.log(diff);
+    context.log(stats);
+    context.bindings.groupsListDiff = JSON.stringify(diff);
+    context.bindings.groupsListStats = JSON.stringify(stats);
+    context.res = {
+        status: 200,
+        body: JSON.stringify(diff)
+    };
     context.done();
 };
