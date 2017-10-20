@@ -28,6 +28,13 @@
       "direction": "out"
     },
     {
+      "name": "gSuiteEvents",
+      "type": "eventHub",
+      "path": "g-suite-events",
+      "connection": "wrdsb-skyline_RootManageSharedAccessKey_EVENTHUB",
+      "direction": "out"
+    },
+    {
       "name": "res",
       "type": "http",
       "direction": "out"
