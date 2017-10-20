@@ -24,6 +24,7 @@ module.exports = function (context, data) {
     var diff = {};
     var stats = {};
     var g_suite_events = [];
+    var timestamp = Date.now();
 
     context.log('Processing data for ' + list);
 
@@ -33,6 +34,7 @@ module.exports = function (context, data) {
             created_groups[group] = groups_list_now[group];
             created_groups_count++;
             var event = {
+                timestamp: timestamp,
                 service: 'groups',
                 event_type: 'create',
                 body: groups_list_now[group]
@@ -47,6 +49,7 @@ module.exports = function (context, data) {
             deleted_groups[group] = groups_list_previous[group];
             deleted_groups_count++;
             var event = {
+                timestamp: timestamp,
                 service: 'groups',
                 event_type: 'delete',
                 body: groups_list_previous[group]
