@@ -23,6 +23,7 @@ module.exports = function (context, data) {
     var deleted_groups_count = 0;
     var diff = {};
     var stats = {};
+    var g_suite_events = [];
 
     context.log('Processing data for ' + list);
 
@@ -31,8 +32,12 @@ module.exports = function (context, data) {
             console.log('Found new group: ' + group);
             created_groups[group] = groups_list_now[group];
             created_groups_count++;
-        } else {
-            //context.log();
+            var event = {
+                service: 'groups',
+                event_type: 'create',
+                body: groups_list_now[group]
+            };
+            g_suite_events.push(event);
         }
     });
 
@@ -41,8 +46,12 @@ module.exports = function (context, data) {
             console.log('Found deleted group: ' + group);
             deleted_groups[group] = groups_list_previous[group];
             deleted_groups_count++;
-        } else {
-            //context.log();
+            var event = {
+                service: 'groups',
+                event_type: 'delete',
+                body: groups_list_previous[group]
+            };
+            g_suite_events.push(event);
         }
     });
 
@@ -65,6 +74,7 @@ module.exports = function (context, data) {
     context.log(stats);
     context.bindings.groupsListDiff = JSON.stringify(diff);
     context.bindings.groupsListStats = JSON.stringify(stats);
+    context.bindings.gSuiteEvents = g_suite_events;
     context.res = {
         status: 200,
         body: JSON.stringify(diff)

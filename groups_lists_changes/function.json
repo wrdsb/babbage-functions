@@ -9,30 +9,37 @@
     {
       "name": "groupsListNow",
       "type": "blob",
-      "direction": "in",
       "path": "groups-lists/{list}-object.json",
-      "connection": "wrdsbcodex_STORAGE"
+      "connection": "wrdsbcodex_STORAGE",
+      "direction": "in"
     },
     {
       "name": "groupsListPrevious",
       "type": "blob",
-      "direction": "in",
       "path": "groups-lists-previous/{list}-object.json",
-      "connection": "wrdsbbabbage_STORAGE"
+      "connection": "wrdsbbabbage_STORAGE",
+      "direction": "in"
     },
     {
       "name": "groupsListDiff",
       "type": "blob",
-      "direction": "out",
       "path": "groups-lists-changes/{list}-object.json",
-      "connection": "wrdsbbabbage_STORAGE"
+      "connection": "wrdsbbabbage_STORAGE",
+      "direction": "out"
     },
     {
       "name": "groupsListStats",
       "type": "blob",
-      "direction": "out",
       "path": "groups-lists-changes/{list}-stats-object.json",
-      "connection": "wrdsbbabbage_STORAGE"
+      "connection": "wrdsbbabbage_STORAGE",
+      "direction": "out"
+    },
+    {
+      "name": "gSuiteEvents",
+      "type": "eventHub",
+      "path": "g-suite-events",
+      "connection": "wrdsb-skyline_RootManageSharedAccessKey_EVENTHUB",
+      "direction": "out"
     },
     {
       "name": "res",
