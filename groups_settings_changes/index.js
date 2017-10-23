@@ -7,7 +7,6 @@ module.exports = function (context, data) {
     // object to store our diff parts
     var diff = {};
     var diff_found = false;
-    var g_suite_events = [];
     var timestamp = Date.now();
 
     context.log('Processing data for ' + group_name);
@@ -33,7 +32,6 @@ module.exports = function (context, data) {
 
     context.log(diff);
     context.bindings.groupSettingsDiff = diff;
-
     if (diff_found) {
         var event = {
             timestamp: timestamp,
@@ -41,9 +39,8 @@ module.exports = function (context, data) {
             event_type: 'update',
             body: diff
         };
-        g_suite_events.push(event);
+        context.bindings.gSuiteEvents = event;
     }
-
     context.res = {
         status: 200,
         body: JSON.stringify(diff)
