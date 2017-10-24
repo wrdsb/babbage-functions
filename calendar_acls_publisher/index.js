@@ -3,18 +3,22 @@ module.exports = function (context) {
 
     context.log('Publishing diffs for ' + calendar_id);
 
-    var missing_memberships = context.bindings.aclsDiff.missing_memberships;
-    var changed_memberships = context.bindings.aclsDiff.changed_memberships;
-    var extra_memberships = context.bindings.aclsDiff.extra_memberships;
+    var missing_memberships = context.bindings.aclsDiff.ideal_minus_actual;
+    var incongruent_memberships = context.bindings.aclsDiff.incongruent_memberships;
+    var extra_memberships = context.bindings.aclsDiff.actual_minus_ideal;
 
+    var changed_memberships ={};
     var message = {};
-    
+
     message.calendar_id = calendar_id;
-    
+
     if (missing_memberships) {
         message.missing_memberships = missing_memberships;
     }
-    if (changed_memberships) {
+    if (incongruent_memberships) {
+        Object.getOwnPropertyNames(incongruent_memberships).forEach(function (membership) {
+            changed_memberships[membership.email] = membership.ideal;
+        });
         message.changed_memberships = changed_memberships;
     }
     if (extra_memberships) {
