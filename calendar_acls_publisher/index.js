@@ -17,7 +17,7 @@ module.exports = function (context) {
     }
     if (incongruent_memberships) {
         Object.getOwnPropertyNames(incongruent_memberships).forEach(function (membership) {
-            changed_memberships[membership.email] = membership.ideal;
+            changed_memberships[membership] = incongruent_memberships[membership].ideal;
         });
         message.changed_memberships = changed_memberships;
     }
