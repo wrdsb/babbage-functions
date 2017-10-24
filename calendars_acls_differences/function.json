@@ -1,25 +1,43 @@
 {
   "bindings": [
     {
-      "name": "aclsActual",
-      "type": "blobTrigger",
-      "direction": "in",
-      "path": "calendar-acls/{filename}",
-      "connection": "wrdsbigor_STORAGE"
+      "name": "req",
+      "type": "httpTrigger",
+      "webHookType": "genericJson",
+      "direction": "in"
     },
     {
-      "name": "aclsIdeal",
+      "name": "aclsActual",
+      "type": "blobTrigger",
+      "path": "calendar-acls-actual/{calendar}.json",
+      "connection": "wrdsbcodex_STORAGE",
+      "direction": "in"
+    },
+    {
+      "name": "aclsCentral",
       "type": "blob",
-      "direction": "in",
-      "path": "calendar-acls-ipps/{filename}",
-      "connection": "wrdsbcodex_STORAGE"
+      "path": "calendar-acls-central/{calendar}.json",
+      "connection": "wrdsbcodex_STORAGE",
+      "direction": "in"
+    },
+    {
+      "name": "aclsIPPS",
+      "type": "blob",
+      "path": "calendar-acls-ipps/{calendar}.json",
+      "connection": "wrdsbcodex_STORAGE",
+      "direction": "in"
     },
     {
       "name": "aclsDiff",
       "type": "blob",
-      "direction": "out",
-      "path": "calendar-acls-differences/{filename}",
-      "connection": "wrdsbbabbage_STORAGE"
+      "path": "calendar-acls-differences/{calendar}.json",
+      "connection": "wrdsbbabbage_STORAGE",
+      "direction": "out"
+    },
+    {
+      "name": "res",
+      "type": "http",
+      "direction": "out"
     }
   ],
   "disabled": false
