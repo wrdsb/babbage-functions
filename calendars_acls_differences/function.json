@@ -8,7 +8,7 @@
     },
     {
       "name": "aclsActual",
-      "type": "blobTrigger",
+      "type": "blob",
       "path": "calendar-acls-actual/{calendar}.json",
       "connection": "wrdsbcodex_STORAGE",
       "direction": "in"
