@@ -1,5 +1,5 @@
 # Groups Lists Changes
-Calculates changes in lists of groups.
+Calculates changes in a list of groups.
 
 ## Request
 Accepts a POST request with the following body:
