@@ -2,7 +2,7 @@ module.exports = function (context) {
     // give our bindings more human-readable names
     var filename = context.bindingData.filename;
     var group_address = context.bindingData.filename.replace('.json', '');
-    
+
     var memberships_ipps = context.bindings.membershipsIPPS;
     if (!memberships_ipps) {
         context.done('memberships_ipps file not found for ' + filename);
@@ -49,22 +49,12 @@ module.exports = function (context) {
         }
     });
 
-    if (Object.getOwnPropertyNames(missing_memberships).length > 0) {
-        diff.missing_memberships = missing_memberships;
-        diff_found = true;
-    }
-    if (Object.getOwnPropertyNames(changed_memberships).length > 0) {
-        diff.changed_memberships = changed_memberships;
-        diff_found = true;
-    }
-    if (Object.getOwnPropertyNames(extra_memberships).length > 0) {
-        diff.extra_memberships = extra_memberships;
-        diff_found = true;
-    }
+    diff.missing_memberships = missing_memberships;
+    diff.changed_memberships = changed_memberships;
+    diff.extra_memberships = extra_memberships;
 
-    if (diff_found) {
-        context.log(diff);
-        context.bindings.membershipsDiff = diff;
-    }
+    context.log(diff);
+    context.bindings.membershipsDiff = diff;
+
     context.done(null, 'Processing data for ' + filename);
 };
