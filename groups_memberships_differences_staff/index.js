@@ -1,12 +1,10 @@
-module.exports = function (context) {
-    // give our bindings more human-readable names
-    var filename = context.bindingData.filename;
-    var group_address = context.bindingData.filename.replace('.json', '');
+module.exports = function (context, data) {
+    var group = data.group;
 
+    var memberships_actual = context.bindings.membershipsActual;
     var memberships_ipps = context.bindings.membershipsIPPS;
     var memberships_central = context.bindings.membershipsCentral;
     var memberships_supplemental = context.bindings.membershipsSupplemental;
-    var memberships_actual = context.bindings.membershipsActual;
 
     var memberships_ideal = Object.assign(memberships_ipps, memberships_supplemental, memberships_central);
 
@@ -15,9 +13,8 @@ module.exports = function (context) {
     var changed_memberships = {};
     var extra_memberships = {};
     var diff = {};
-    var diff_found = false;
 
-    context.log('Processing data for ' + filename);
+    context.log('Processing data for ' + group);
 
     Object.getOwnPropertyNames(memberships_ideal).forEach(function (member) {
         if (!memberships_actual[member]) {
@@ -25,7 +22,7 @@ module.exports = function (context) {
             missing_memberships[member] = memberships_ideal[member];
         } else {
             if (memberships_actual[member].role != memberships_ideal[member].role) {
-                context.log(memberships_actual[member].email +' role changed from '+ memberships_actual[member].role +' to '+ memberships_ideal[member].role +' in '+ filename);
+                context.log(memberships_actual[member].email +' role changed from '+ memberships_actual[member].role +' to '+ memberships_ideal[member].role +' in '+ group);
                 changed_memberships[member] = memberships_ideal[member];
             }
         }
@@ -45,5 +42,5 @@ module.exports = function (context) {
     context.log(diff);
     context.bindings.membershipsDiff = diff;
 
-    context.done(null, 'Processing data for ' + filename);
+    context.done(null, 'Processing data for ' + group);
 };
