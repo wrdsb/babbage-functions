@@ -14,16 +14,16 @@
       "direction": "in"
     },
     {
-      "name": "aclsCentral",
+      "name": "aclsIPPS",
       "type": "blob",
-      "path": "calendar-acls-central/{calendar}.json",
+      "path": "calendar-acls-ipps/{calendar}.json",
       "connection": "wrdsbcodex_STORAGE",
       "direction": "in"
     },
     {
-      "name": "aclsIPPS",
+      "name": "aclsCentral",
       "type": "blob",
-      "path": "calendar-acls-ipps/{calendar}.json",
+      "path": "calendar-acls-central/{calendar}.json",
       "connection": "wrdsbcodex_STORAGE",
       "direction": "in"
     },
