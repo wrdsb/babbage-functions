@@ -9,7 +9,5 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "async": "^2.5.0",
-    "azure-storage": "^2.5.0"
   }
 }
