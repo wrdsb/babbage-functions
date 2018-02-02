@@ -37,28 +37,32 @@ module.exports = function (context, data) {
     }
 
     Object.getOwnPropertyNames(new_record).forEach(function (new_property) {
-        if (!old_record[new_property]) {
-            changed = true;
-            changes[new_property] = {
-                from: null,
-                to: new_record[new_property]
-            };
-        } else if (old_record[new_property] != new_record[new_property]) {
-            changed = true;
-            changes[new_property] = {
-                from: old_record[new_property],
-                to: new_record[new_property]
-            };
+        if (new_property != 'positions' && !new_property.startsWith('_')) {
+            if (!old_record[new_property]) {
+                changed = true;
+                changes[new_property] = {
+                    from: null,
+                    to: new_record[new_property]
+                };
+            } else if (old_record[new_property] != new_record[new_property]) {
+                changed = true;
+                changes[new_property] = {
+                    from: old_record[new_property],
+                    to: new_record[new_property]
+                };
+            }
         }
     });
 
     Object.getOwnPropertyNames(old_record).forEach(function (old_property) {
-        if (!new_record[old_property]) {
-            changed = true;
-            changes[old_property] = {
-                from: old_record[old_property],
-                to: null
-            };
+        if (old_property != 'positions' && !old_property.startsWith('_')) {
+            if (!new_record[old_property]) {
+                changed = true;
+                changes[old_property] = {
+                    from: old_record[old_property],
+                    to: null
+                };
+            }
         }
     });
 
