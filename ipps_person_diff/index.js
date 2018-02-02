@@ -16,6 +16,8 @@ module.exports = function (context, data) {
         new_positions = new_record.positions;
     }
 
+    var created = false;
+    var deleted = false;
     var changed = false;
     var changes = {};
 
@@ -23,6 +25,16 @@ module.exports = function (context, data) {
     changes.positions.added = {};
     changes.positions.changed = {};
     changes.positions.removed = {};
+
+    if (Object.getOwnPropertyNames(old_record).length < 1) {
+        changed = true;
+        created = true;
+    }
+
+    if (Object.getOwnPropertyNames(new_record).length < 1) {
+        changed = true;
+        deleted = true;
+    }
 
     Object.getOwnPropertyNames(new_record).forEach(function (new_property) {
         if (!old_record[new_property]) {
@@ -98,6 +110,8 @@ module.exports = function (context, data) {
         function_name: context.executionContext.functionName,
         invocation_id: context.executionContext.invocationId,
         data: {
+            created: created,
+            deleted: deleted,
             changed: changed,
             changes: changes
         },
