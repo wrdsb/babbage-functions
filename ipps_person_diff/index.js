@@ -1,6 +1,7 @@
 module.exports = function (context, data) {
     var execution_timestamp = (new Date()).toJSON();  // format: 2012-04-23T18:25:43.511Z
-    var skyline_message;
+    var skyline_messages = [];
+    var skyline_function_invocation_message;
 
     var old_record = data.old_record;
     var new_record = data.new_record;
@@ -108,8 +109,9 @@ module.exports = function (context, data) {
         }
     });
 
-    skyline_message = {
-        service: 'babbage',
+    skyline_function_invocation_message = {
+        event_type: 'function_invocation',
+        app: 'wrdsb-babbage',
         operation: 'ipps_person_diff',
         function_name: context.executionContext.functionName,
         invocation_id: context.executionContext.invocationId,
@@ -121,11 +123,13 @@ module.exports = function (context, data) {
         },
         timestamp: execution_timestamp
     };
-    context.bindings.skylineEventHubMessage = JSON.stringify(skyline_message);
+    skyline_messages.push(skyline_function_invocation_message);
+
+    context.bindings.skylineEvents = skyline_messages;
     context.res = {
         status: 200,
-        body: skyline_message
+        body: skyline_function_invocation_message
     };
-    context.log(JSON.stringify(skyline_message));
-    context.done(null, JSON.stringify(skyline_message));
+    context.log(JSON.stringify(skyline_function_invocation_message));
+    context.done(null, JSON.stringify(skyline_function_invocation_message));
 };
