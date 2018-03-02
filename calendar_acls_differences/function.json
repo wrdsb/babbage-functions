@@ -7,30 +7,23 @@
       "direction": "in"
     },
     {
-      "name": "aclsActual",
+      "name": "membershipsActual",
       "type": "blob",
-      "path": "calendar-acls-actual/{calendar}.json",
+      "path": "calendar-memberships-actual/{calendar}.json",
       "connection": "wrdsbcodex_STORAGE",
       "direction": "in"
     },
     {
-      "name": "aclsIPPS",
+      "name": "membershipsIPPS",
       "type": "blob",
-      "path": "calendar-acls-ipps/{calendar}.json",
+      "path": "calendar-memberships-ipps/{calendar}.json",
       "connection": "wrdsbcodex_STORAGE",
       "direction": "in"
     },
     {
-      "name": "aclsCentral",
+      "name": "membershipsDiff",
       "type": "blob",
-      "path": "calendar-acls-central/{calendar}.json",
-      "connection": "wrdsbcodex_STORAGE",
-      "direction": "in"
-    },
-    {
-      "name": "aclsDiff",
-      "type": "blob",
-      "path": "calendar-acls-differences/{calendar}.json",
+      "path": "calendar-memberships-differences/{calendar}.json",
       "connection": "wrdsbbabbage_STORAGE",
       "direction": "out"
     },
