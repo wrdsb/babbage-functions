@@ -3,8 +3,8 @@ module.exports = function (context, data) {
 
     var memberships_actual = context.bindings.membershipsActual;
     var memberships_ipps = context.bindings.membershipsIPPS;
-    var memberships_central = context.bindings.membershipsCentral;
-    var memberships_supplemental = context.bindings.membershipsSupplemental;
+    var memberships_central = data.memberships.central;
+    var memberships_supplemental = data.memberships.supplemental;
 
     var memberships_ideal = Object.assign(memberships_ipps, memberships_supplemental, memberships_central);
 
@@ -14,7 +14,7 @@ module.exports = function (context, data) {
     var extra_memberships = [];
     var diff = {};
 
-    context.log('Processing data for ' + group);
+    context.log('Calculating membership diff for Group ' + group);
 
     Object.getOwnPropertyNames(memberships_ideal).forEach(function (member) {
         if (!memberships_actual[member]) {
@@ -49,5 +49,5 @@ module.exports = function (context, data) {
     context.log(diff);
     context.bindings.membershipsDiff = diff;
 
-    context.done(null, 'Processing data for ' + group);
+    context.done(null, 'Finished calculating membership diff for Group ' + group);
 };

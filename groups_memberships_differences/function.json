@@ -9,37 +9,23 @@
     {
       "name": "membershipsActual",
       "type": "blob",
-      "direction": "in",
       "path": "groups-memberships-actual/{group}.json",
-      "connection": "wrdsbcodex_STORAGE"
+      "connection": "wrdsbcodex_STORAGE",
+      "direction": "in"
     },
     {
       "name": "membershipsIPPS",
       "type": "blob",
-      "direction": "in",
       "path": "groups-memberships-ipps/{group}.json",
-      "connection": "wrdsbcodex_STORAGE"
-    },
-    {
-      "name": "membershipsCentral",
-      "type": "blob",
-      "direction": "in",
-      "path": "groups-memberships-central/{group}.json",
-      "connection": "wrdsbcodex_STORAGE"
-    },
-    {
-      "name": "membershipsSupplemental",
-      "type": "blob",
-      "direction": "in",
-      "path": "groups-memberships-supplemental/{group}.json",
-      "connection": "wrdsbcodex_STORAGE"
+      "connection": "wrdsbcodex_STORAGE",
+      "direction": "in"
     },
     {
       "name": "membershipsDiff",
       "type": "blob",
-      "direction": "out",
       "path": "groups-memberships-differences/{group}.json",
-      "connection": "wrdsbbabbage_STORAGE"
+      "connection": "wrdsbbabbage_STORAGE",
+      "direction": "out"
     },
     {
       "name": "res",
