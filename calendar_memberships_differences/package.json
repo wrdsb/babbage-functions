@@ -1,7 +1,7 @@
 {
-  "name": "calendar_acls_differences",
+  "name": "calendar_memberships_differences",
   "version": "0.0.1",
-  "description": "Calculates differences in Calendar ACLs between IPPS (ideal) and Google (actual).",
+  "description": "Calculates differences in Calendar memberships (ACLs) between ideal and actual.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
