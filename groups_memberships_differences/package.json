@@ -1,7 +1,7 @@
 {
   "name": "groups_memberships_differences",
   "version": "0.0.1",
-  "description": "Calculates differences in group memberships between IPPS (ideal) and Google (actual).",
+  "description": "Calculates differences in Group memberships between ideal and actual.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
