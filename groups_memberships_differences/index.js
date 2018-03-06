@@ -1,7 +1,7 @@
 module.exports = function (context, data) {
     var group = data.group;
 
-    var memberships_actual = context.bindings.membershipsActual;
+    var memberships_actual = context.bindings.membershipsActual.actual;
     var memberships_ipps = context.bindings.membershipsIPPS;
     var memberships_central = data.memberships.central;
     //var memberships_supplemental = data.memberships.supplemental;
