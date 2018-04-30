@@ -3,9 +3,8 @@ module.exports = function (context, data) {
     var isEqual = require('lodash.isequal');
 
     // give our bindings more human-readable names
-    var people_previous = context.bindings.peoplePrevious;
-    var people_now = context.bindings.peopleNow;
-    var people_diff = context.bindings.peopleDifferences;
+    var records_previous = context.bindings.recordsPrevious;
+    var records_now = context.bindings.recordsNow;
 
     // object to store our total diff as we build it
     var differences = {};
@@ -21,7 +20,7 @@ module.exports = function (context, data) {
         if (err) {
             context.done(err);
         } else {
-            context.bindings.peopleDifferences = JSON.stringify(differences);
+            context.bindings.recordsDifferences = JSON.stringify(differences);
             context.res = {
                 status: 200,
                 body: JSON.stringify(differences)
@@ -31,51 +30,51 @@ module.exports = function (context, data) {
     });
 
     function kickoff(callback) {
-        callback(null, people_previous, people_now, differences);
+        callback(null, records_previous, records_now, differences);
     }
 
-    function find_creates_and_updates(people_previous, people_now, differences, callback) {
-        // loop through all records in people_now, each of which is a property of people_now, named for the record's EIN
-        Object.getOwnPropertyNames(people_now).forEach(function (ein) {
-            context.log('Processing EIN ' + ein);
-            var new_record = people_now[ein];      // get the full person record from people_now
-            var old_record = people_previous[ein]; // get the corresponding record in people_previous
+    function find_creates_and_updates(records_previous, records_now, differences, callback) {
+        // loop through all records in records_now, each of which is a property of records_now, named for the record's record_id
+        Object.getOwnPropertyNames(records_now).forEach(function (record_id) {
+            context.log('Processing record_id ' + record_id);
+            var new_record = records_now[record_id];      // get the full person record from records_now
+            var old_record = records_previous[record_id]; // get the corresponding record in records_previous
     
-            // if we found a corresponding record in people_previous, look for changes
+            // if we found a corresponding record in records_previous, look for changes
             if (old_record) {
-                context.log('Found existing record for EIN ' + ein);
+                context.log('Found existing record for record_id ' + record_id);
 
                 // Compare old and new records using Lodash _.isEqual, which performs a deep comparison
                 var records_equal = isEqual(old_record, new_record);
     
                 // if person changed, add changes to total diff
                 if (!records_equal) {
-                    context.log('Found changed record for EIN ' + ein);
-                    differences.updated_records[ein] = {
+                    context.log('Found changed record for record_id ' + record_id);
+                    differences.updated_records[record_id] = {
                         previous: old_record,
                         now: new_record
                     };
                 } else {
-                    context.log('No changes found for EIN ' + ein);
+                    context.log('No changes found for record_id ' + record_id);
                 }
     
-                // remove old_record from people_previous to leave us with a diff. See find_deletes().
-                delete people_previous[ein];
+                // remove old_record from records_previous to leave us with a diff. See find_deletes().
+                delete records_previous[record_id];
     
-            // if we don't find a corresponding record in people_previous, they're new
+            // if we don't find a corresponding record in records_previous, they're new
             } else {
-                context.log('Found new record for EIN ' + ein);
-                differences.created_records[ein] = new_record;
+                context.log('Found new record for record_id ' + record_id);
+                differences.created_records[record_id] = new_record;
             }
         });
-        callback(null, people_previous, people_now, differences);
+        callback(null, records_previous, records_now, differences);
     }
 
-    function find_deletes(people_previous, people_now, differences, callback) {
+    function find_deletes(records_previous, records_now, differences, callback) {
         // if we have any old records remaining, they didn't match a new record, so they must be deletes
-        Object.getOwnPropertyNames(people_previous).forEach(function (ein) {
-            context.log('Found deleted record for EIN ' + ein);
-            differences.deleted_records[ein] = people_previous[ein];
+        Object.getOwnPropertyNames(records_previous).forEach(function (record_id) {
+            context.log('Found deleted record for record_id ' + record_id);
+            differences.deleted_records[record_id] = records_previous[record_id];
         });
         callback(null, differences);
     }
