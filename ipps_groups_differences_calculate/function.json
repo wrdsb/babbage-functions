@@ -1,0 +1,26 @@
+{
+  "bindings": [
+    {
+      "name": "groupsNow",
+      "type": "blob",
+      "path": "ipps/groups_now.json",
+      "connection": "wrdsbflenderson_STORAGE",
+      "direction": "in"
+    },
+    {
+      "name": "groupsPrevious",
+      "type": "blob",
+      "path": "ipps/groups_previous.json",
+      "connection": "wrdsbbabbage_STORAGE",
+      "direction": "in"
+    },
+    {
+      "name": "groupsDifferences",
+      "type": "blob",
+      "path": "ipps/groups_differences.json",
+      "connection": "wrdsbbabbage_STORAGE",
+      "direction": "out"
+    }
+  ],
+  "disabled": true
+}

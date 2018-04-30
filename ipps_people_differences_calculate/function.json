@@ -1,0 +1,26 @@
+{
+  "bindings": [
+    {
+      "name": "peopleNow",
+      "type": "blob",
+      "path": "ipps/people_now.json",
+      "connection": "wrdsbflenderson_STORAGE",
+      "direction": "in"
+    },
+    {
+      "name": "peoplePrevious",
+      "type": "blob",
+      "path": "ipps/people_previous.json",
+      "connection": "wrdsbbabbage_STORAGE",
+      "direction": "in"
+    },
+    {
+      "name": "peopleDifferences",
+      "type": "blob",
+      "path": "ipps/people_differences.json",
+      "connection": "wrdsbbabbage_STORAGE",
+      "direction": "out"
+    }
+  ],
+  "disabled": true
+}

@@ -1,0 +1,26 @@
+{
+  "bindings": [
+    {
+      "name": "locationsNow",
+      "type": "blob",
+      "path": "ipps/locations_now.json",
+      "connection": "wrdsbflenderson_STORAGE",
+      "direction": "in"
+    },
+    {
+      "name": "locationsPrevious",
+      "type": "blob",
+      "path": "ipps/locations_previous.json",
+      "connection": "wrdsbbabbage_STORAGE",
+      "direction": "in"
+    },
+    {
+      "name": "locationsDifferences",
+      "type": "blob",
+      "path": "ipps/locations_differences.json",
+      "connection": "wrdsbbabbage_STORAGE",
+      "direction": "out"
+    }
+  ],
+  "disabled": true
+}
