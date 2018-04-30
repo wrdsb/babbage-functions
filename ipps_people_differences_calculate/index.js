@@ -21,11 +21,10 @@ module.exports = function (context, data) {
         if (err) {
             context.done(err);
         } else {
-            context.bindings.peoplePrevious = people_now;
-            context.bindings.peopleDifferences = differences;
+            context.bindings.peopleDifferences = JSON.stringify(differences);
             context.res = {
                 status: 200,
-                body: differences
+                body: JSON.stringify(differences)
             };
             context.done(null, differences);
         }
@@ -51,13 +50,13 @@ module.exports = function (context, data) {
     
                 // if person changed, add changes to total diff
                 if (!records_equal) {
-                    console.log('Found changed record for EIN ' + ein);
+                    context.log('Found changed record for EIN ' + ein);
                     differences.updated_records[ein] = {
                         previous: old_record,
                         now: new_record
                     };
                 } else {
-                    console.log('No changes found for EIN ' + ein);
+                    context.log('No changes found for EIN ' + ein);
                 }
     
                 // remove old_record from people_previous to leave us with a diff. See find_deletes().
@@ -65,7 +64,7 @@ module.exports = function (context, data) {
     
             // if we don't find a corresponding record in people_previous, they're new
             } else {
-                console.log('Found new record for EIN ' + ein);
+                context.log('Found new record for EIN ' + ein);
                 differences.created_records[ein] = new_record;
             }
         });
@@ -75,7 +74,7 @@ module.exports = function (context, data) {
     function find_deletes(people_previous, people_now, differences, callback) {
         // if we have any old records remaining, they didn't match a new record, so they must be deletes
         Object.getOwnPropertyNames(people_previous).forEach(function (ein) {
-            console.log('Found deleted record for EIN ' + ein);
+            context.log('Found deleted record for EIN ' + ein);
             differences.deleted_records[ein] = people_previous[ein];
         });
         callback(null, differences);
