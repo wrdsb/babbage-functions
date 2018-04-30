@@ -1,6 +1,12 @@
 {
   "bindings": [
     {
+      "name": "req",
+      "type": "httpTrigger",
+      "webHookType": "genericJson",
+      "direction": "in"
+    },
+    {
       "name": "locationsNow",
       "type": "blob",
       "path": "ipps/locations_now.json",
@@ -19,6 +25,11 @@
       "type": "blob",
       "path": "ipps/locations_differences.json",
       "connection": "wrdsbbabbage_STORAGE",
+      "direction": "out"
+    },
+    {
+      "name": "res",
+      "type": "http",
       "direction": "out"
     }
   ],
