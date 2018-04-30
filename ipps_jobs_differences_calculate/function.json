@@ -7,23 +7,23 @@
       "direction": "in"
     },
     {
-      "name": "jobsNow",
+      "name": "recordsNow",
       "type": "blob",
-      "path": "ipps/jobs_now.json",
+      "path": "ipps/jobs-now-object.json",
       "connection": "wrdsbflenderson_STORAGE",
       "direction": "in"
     },
     {
-      "name": "jobsPrevious",
+      "name": "recordsPrevious",
       "type": "blob",
-      "path": "ipps/jobs_previous.json",
+      "path": "ipps/jobs-previous.json",
       "connection": "wrdsbbabbage_STORAGE",
       "direction": "in"
     },
     {
-      "name": "jobsDifferences",
+      "name": "recordsDifferences",
       "type": "blob",
-      "path": "ipps/jobs_differences.json",
+      "path": "ipps/jobs-differences.json",
       "connection": "wrdsbbabbage_STORAGE",
       "direction": "out"
     },
@@ -33,5 +33,5 @@
       "direction": "out"
     }
   ],
-  "disabled": true
+  "disabled": false
 }
