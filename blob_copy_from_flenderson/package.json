@@ -1,7 +1,7 @@
 {
-    "name": "update_blob_contents",
+    "name": "blob_copy_from_flenderson",
     "version": "0.0.1",
-    "description": "Replace the contents of one blob with those of another, on demand.",
+    "description": "Copy a blob from Flenderson's storage account into Babbage's storage account.",
     "main": "index.js",
     "scripts": {
       "test": "echo \"Error: no test specified\" && exit 1"
