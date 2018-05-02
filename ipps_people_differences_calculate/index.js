@@ -27,7 +27,7 @@ module.exports = function (context, data) {
             context.bindings.flynnGrid = events;
             context.res = {
                 status: 200,
-                body: JSON.stringify(differences)
+                body: differences
             };
             context.done(null, differences);
         }
