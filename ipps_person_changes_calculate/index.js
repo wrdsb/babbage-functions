@@ -40,7 +40,7 @@ module.exports = function (context, data) {
         var new_value = new_record[field];
 
         // if we lost a field
-        if (old_value && !new_value) {
+        if (old_value && new_value == null) {
             var event_type = 'ipps_person_drops_' + field;
             var payload = {
                 record: new_record,
@@ -52,7 +52,7 @@ module.exports = function (context, data) {
             changes[event_type] = payload;
 
         // or if we gained a field
-        } else if (!old_value && new_value) {
+        } else if (old_value == null && new_value) {
             var event_type = 'ipps_person_gets_' + field;
             var payload = {
                 record: new_record,
@@ -92,7 +92,7 @@ module.exports = function (context, data) {
             var new_position = new_positions[position_id];
 
             // if the position isn't present in old_positions, it's a brand new position
-            if (!old_position) {
+            if (old_position == null) {
                 var event_type = 'ipps_person_gets_position';
                 var payload = {
                     record: new_record,
@@ -103,7 +103,7 @@ module.exports = function (context, data) {
                 changes[event_type] = payload;
 
             // if the position isn't present in new_positions, it got dropped
-            } else if (!new_position) {
+            } else if (new_position == null) {
                 var event_type = 'ipps_person_drops_position';
                 var payload = {
                     record: new_record,
@@ -128,7 +128,7 @@ module.exports = function (context, data) {
             var new_value = new_position[field];
 
             // if the field isn't present in the old position, it's a brand new field
-            if (!old_value) {
+            if (old_value == null) {
                 var event_type = 'ipps_person_position_gets_' + field;
                 var payload = {
                     record: new_record,
@@ -141,7 +141,7 @@ module.exports = function (context, data) {
                 changes[event_type] = payload;
 
             // if the field isn't present in the new position, it got dropped
-            } else if (!new_value) {
+            } else if (new_value == null) {
                 var event_type = 'ipps_person_position_drops_' + field;
                 var payload = {
                     record: new_record,
