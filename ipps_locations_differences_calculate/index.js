@@ -40,26 +40,26 @@ module.exports = function (context, data) {
     function find_creates_and_updates(records_previous, records_now, differences, callback) {
         // loop through all records in records_now, each of which is a property of records_now, named for the record's record_id
         Object.getOwnPropertyNames(records_now).forEach(function (record_id) {
-            context.log('Processing record_id ' + record_id);
+            // context.log('Processing record_id ' + record_id);
             var new_record = records_now[record_id];      // get the full person record from records_now
             var old_record = records_previous[record_id]; // get the corresponding record in records_previous
     
             // if we found a corresponding record in records_previous, look for changes
             if (old_record) {
-                context.log('Found existing record for record_id ' + record_id);
+                // context.log('Found existing record for record_id ' + record_id);
 
                 // Compare old and new records using Lodash _.isEqual, which performs a deep comparison
                 var records_equal = isEqual(old_record, new_record);
     
                 // if person changed, add changes to total diff
                 if (!records_equal) {
-                    context.log('Found changed record for record_id ' + record_id);
+                    // context.log('Found changed record for record_id ' + record_id);
                     differences.updated_records[record_id] = {
                         previous: old_record,
                         now: new_record
                     };
                 } else {
-                    context.log('No changes found for record_id ' + record_id);
+                    // context.log('No changes found for record_id ' + record_id);
                 }
     
                 // remove old_record from records_previous to leave us with a diff. See find_deletes().
@@ -67,7 +67,7 @@ module.exports = function (context, data) {
     
             // if we don't find a corresponding record in records_previous, they're new
             } else {
-                context.log('Found new record for record_id ' + record_id);
+                // context.log('Found new record for record_id ' + record_id);
                 differences.created_records[record_id] = new_record;
             }
         });
@@ -77,7 +77,7 @@ module.exports = function (context, data) {
     function find_deletes(records_previous, records_now, differences, callback) {
         // if we have any old records remaining, they didn't match a new record, so they must be deletes
         Object.getOwnPropertyNames(records_previous).forEach(function (record_id) {
-            context.log('Found deleted record for record_id ' + record_id);
+            // context.log('Found deleted record for record_id ' + record_id);
             differences.deleted_records[record_id] = records_previous[record_id];
         });
         callback(null, differences);
