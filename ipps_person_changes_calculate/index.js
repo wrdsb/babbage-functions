@@ -26,6 +26,24 @@ module.exports = function (context, data) {
         }
     });
 
+    var flynn_event = {
+        id: 'babbage-functions-' + context.executionContext.functionName +'-'+ context.executionContext.invocationId,
+        eventType: 'babbage_calculates_ipps_person_changes',
+        eventTime: execution_timestamp,
+        data: {
+            event_type: 'babbage_calculates_ipps_person_changes',
+            app: 'wrdsb-babbage',
+            function_name: context.executionContext.functionName,
+            invocation_id: context.executionContext.invocationId,
+            result: {
+                payload: changes
+            },
+            timestamp: execution_timestamp
+        },
+        dataVersion: '1'
+    };
+    events.push(JSON.stringify(flynn_event));
+
     // Send generated events to Flynn Grid
     context.bindings.flynnGrid = events;
     context.res = {
