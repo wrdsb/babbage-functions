@@ -89,74 +89,117 @@ module.exports = function (context, data) {
 
         Object.getOwnPropertyNames(differences.created_records).forEach(function (record_id) {
             var record = differences.created_records[record_id];
+            var event_type = "ca.wrdsb.flenderson.ipps_person.create";
             var event = {
-                id: 'flenderson_creates_ipps_person-' + record_id +'-'+ execution_timestamp,
-                eventType: 'flenderson_creates_ipps_person',
-                eventTime: execution_timestamp,
+                eventID: `${event_type}-${context.executionContext.invocationId}`,
+                eventType: event_type,
+                source: "/ipps/person/{person_id}/create",
+                schemaURL: "ca.wrdsb.flenderson.ipps_person.create.json",
+                extensions: {
+                    label: "flenderson creates ipps_person",
+                    tags: [
+                        "flenderson",
+                        "ipps",
+                        "ipps_person",
+                        "create"
+                    ]
+                },
                 data: {
-                    event_type: 'flenderson_creates_ipps_person',
-                    app: 'wrdsb-babbage',
                     function_name: context.executionContext.functionName,
                     invocation_id: context.executionContext.invocationId,
                     result: {
                         payload: record
                     },
-                    timestamp: execution_timestamp
                 },
-                dataVersion: '1'
+                eventTime: execution_timestamp,
+                eventTypeVersion: "0.1",
+                cloudEventsVersion: "0.1",
+                contentType: "application/json"
             };
             events.push(JSON.stringify(event));
         });
 
         Object.getOwnPropertyNames(differences.updated_records).forEach(function (record_id) {
             var record = differences.updated_records[record_id];
+            var event_type = "ca.wrdsb.flenderson.ipps_person.update";
             var event = {
-                id: 'flenderson_updates_ipps_person-' + record_id +'-'+ execution_timestamp,
-                eventType: 'flenderson_updates_ipps_person',
-                eventTime: execution_timestamp,
+                eventID: `${event_type}-${context.executionContext.invocationId}`,
+                eventType: event_type,
+                source: "/ipps/person/{person_id}/update",
+                schemaURL: "ca.wrdsb.flenderson.ipps_person.update.json",
+                extensions: {
+                    label: "flenderson updates ipps_person",
+                    tags: [
+                        "flenderson",
+                        "ipps",
+                        "ipps_person",
+                        "update"
+                    ]
+                },
                 data: {
-                    event_type: 'flenderson_updates_ipps_person',
-                    app: 'wrdsb-babbage',
                     function_name: context.executionContext.functionName,
                     invocation_id: context.executionContext.invocationId,
                     result: {
                         payload: record
                     },
-                    timestamp: execution_timestamp
                 },
-                dataVersion: '1'
+                eventTime: execution_timestamp,
+                eventTypeVersion: "0.1",
+                cloudEventsVersion: "0.1",
+                contentType: "application/json"
             };
             events.push(JSON.stringify(event));
         });
 
         Object.getOwnPropertyNames(differences.deleted_records).forEach(function (record_id) {
             var record = differences.deleted_records[record_id];
+            var event_type = "ca.wrdsb.flenderson.ipps_person.delete";
             var event = {
-                id: 'flenderson_deletes_ipps_person-' + record_id +'-'+ execution_timestamp,
-                eventType: 'flenderson_deletes_ipps_person',
-                eventTime: execution_timestamp,
+                eventID: `${event_type}-${context.executionContext.invocationId}`,
+                eventType: event_type,
+                source: "/ipps/person/{person_id}/delete",
+                schemaURL: "ca.wrdsb.flenderson.ipps_person.delete.json",
+                extensions: {
+                    label: "flenderson deletes ipps_person",
+                    tags: [
+                        "flenderson",
+                        "ipps",
+                        "ipps_person",
+                        "delete"
+                    ]
+                },
                 data: {
-                    event_type: 'flenderson_deletes_ipps_person',
-                    app: 'wrdsb-babbage',
                     function_name: context.executionContext.functionName,
                     invocation_id: context.executionContext.invocationId,
                     result: {
                         payload: record
                     },
-                    timestamp: execution_timestamp
                 },
-                dataVersion: '1'
+                eventTime: execution_timestamp,
+                eventTypeVersion: "0.1",
+                cloudEventsVersion: "0.1",
+                contentType: "application/json"
             };
             events.push(JSON.stringify(event));
         });
 
+        var event_type = "ca.wrdsb.babbage.ipps_people_differences.calculate";
         var flynn_event = {
-            id: 'babbage-functions-' + context.executionContext.functionName +'-'+ context.executionContext.invocationId,
-            eventType: 'babbage_calculates_ipps_people_differences',
-            eventTime: execution_timestamp,
+            eventID: `${event_type}-${context.executionContext.invocationId}`,
+            eventType: event_type,
+            source: "/ipps/people/differences/calculate",
+            schemaURL: "ca.wrdsb.babbage.ipps_people_differences.calculate.json",
+            extensions: { 
+                label: "babbage calculates ipps_people_differences", 
+                tags: [
+                    "babbage", 
+                    "ipps", 
+                    "ipps_people_differences", 
+                    "differences", 
+                    "calculate"
+                ] 
+            },
             data: {
-                event_type: 'babbage_calculates_ipps_people_differences',
-                app: 'wrdsb-babbage',
                 function_name: context.executionContext.functionName,
                 invocation_id: context.executionContext.invocationId,
                 result: {
@@ -165,9 +208,11 @@ module.exports = function (context, data) {
                         connection: 'wrdsbbabbage_STORAGE'
                     }
                 },
-                timestamp: execution_timestamp
             },
-            dataVersion: '1'
+            eventTime: execution_timestamp,
+            eventTypeVersion: "0.1",
+            cloudEventsVersion: "0.1",
+            contentType: "application/json"
         };
         events.push(JSON.stringify(flynn_event));
 
