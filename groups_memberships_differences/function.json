@@ -7,6 +7,15 @@
       "direction": "in"
     },
     {
+      "name": "membershipsOverrides",
+      "type": "documentDB",
+      "id": "{group}",
+      "databaseName": "wrdsb-codex",
+      "collectionName": "groups-memberships-overrides",
+      "connection": "wrdsb-codex_DOCUMENTDB",
+      "direction": "in"
+    },
+    {
       "name": "membershipsActual",
       "type": "blob",
       "path": "groups-memberships-actual/{group}.json",
