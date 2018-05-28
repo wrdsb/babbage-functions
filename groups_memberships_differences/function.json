@@ -16,13 +16,6 @@
       "direction": "in"
     },
     {
-      "name": "membershipsActual",
-      "type": "blob",
-      "path": "groups-memberships-actual/{group}.json",
-      "connection": "wrdsbcodex_STORAGE",
-      "direction": "in"
-    },
-    {
       "name": "membershipsIPPS",
       "type": "blob",
       "path": "groups-memberships-ipps/{group}.json",
