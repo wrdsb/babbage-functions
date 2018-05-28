@@ -1,12 +1,10 @@
 module.exports = function (context, data) {
     var group = data.group;
 
-    var memberships_actual = context.bindings.membershipsActual.actual;
+    var memberships_actual = context.bindings.membershipsOverrides.actual;
     var memberships_ipps = context.bindings.membershipsIPPS;
     var memberships_central = data.memberships.central;
-    //var memberships_supplemental = data.memberships.supplemental;
 
-    //var memberships_ideal = Object.assign(memberships_ipps, memberships_supplemental, memberships_central);
     var memberships_ideal = Object.assign(memberships_ipps, memberships_central);
 
     // objects to store our diff parts
