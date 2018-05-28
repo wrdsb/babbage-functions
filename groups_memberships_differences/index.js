@@ -1,9 +1,9 @@
 module.exports = function (context, data) {
     var group = data.group;
 
-    var memberships_actual = context.bindings.membershipsOverrides.actual;
+    var memberships_actual = context.bindings.membershipsActual.actual;
     var memberships_ipps = context.bindings.membershipsIPPS;
-    var memberships_central = data.memberships.central;
+    var memberships_central = context.bindings.membershipsOverrides.central;
 
     var memberships_ideal = Object.assign(memberships_ipps, memberships_central);
 
