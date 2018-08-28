@@ -11,5 +11,5 @@ module.exports = function (context, data) {
         status: 200,
         body: event
     };
-    context.done(null, "Blob contents replaced.");
+    context.done(null, event);
 };
