@@ -10,9 +10,9 @@ module.exports = function (context, data) {
 
     // object to store our total diff as we build it
     var differences = {};
-    differences.created_records = {};
-    differences.updated_records = {};
-    differences.deleted_records = {};
+    differences.created_records = [];
+    differences.updated_records = [];
+    differences.deleted_records = [];
 
     waterfall([
         kickoff,
@@ -54,10 +54,10 @@ module.exports = function (context, data) {
                 // if record changed, add changes to total diff
                 if (!records_equal) {
                     // context.log('Found changed record for record_id ' + record_id);
-                    differences.updated_records[record_id] = {
+                    differences.updated_records.push({
                         previous: old_record,
                         now: new_record
-                    };
+                    });
                 } else {
                     // context.log('No changes found for record_id ' + record_id);
                 }
@@ -68,7 +68,7 @@ module.exports = function (context, data) {
             // if we don't find a corresponding record in records_previous, they're new
             } else {
                 // context.log('Found new record for record_id ' + record_id);
-                differences.created_records[record_id] = new_record;
+                differences.created_records.push(new_record);
             }
         });
         callback(null, records_previous, records_now, differences);
@@ -78,7 +78,7 @@ module.exports = function (context, data) {
         // if we have any old records remaining, they didn't match a new record, so they must be deletes
         Object.getOwnPropertyNames(records_previous).forEach(function (record_id) {
             // context.log('Found deleted record for record_id ' + record_id);
-            differences.deleted_records[record_id] = records_previous[record_id];
+            differences.deleted_records.push(records_previous[record_id]);
         });
         callback(null, differences);
     }
@@ -87,8 +87,7 @@ module.exports = function (context, data) {
         // array for the events being sent to the Flynn Grid
         var events = [];
 
-        Object.getOwnPropertyNames(differences.created_records).forEach(function (record_id) {
-            var record = differences.created_records[record_id];
+        differences.created_records.forEach(function (record) {
             var event_type = "ca.wrdsb.skinner.trillium_enrolment.create";
             var event = {
                 eventID: `${event_type}-${context.executionContext.invocationId}`,
@@ -120,8 +119,7 @@ module.exports = function (context, data) {
             events.push(JSON.stringify(event));
         });
 
-        Object.getOwnPropertyNames(differences.updated_records).forEach(function (record_id) {
-            var record = differences.updated_records[record_id];
+        differences.updated_records.forEach(function (record) {
             var event_type = "ca.wrdsb.skinner.trillium_enrolment.update";
             var event = {
                 eventID: `${event_type}-${context.executionContext.invocationId}`,
@@ -152,8 +150,7 @@ module.exports = function (context, data) {
             events.push(JSON.stringify(event));
         });
 
-        Object.getOwnPropertyNames(differences.deleted_records).forEach(function (record_id) {
-            var record = differences.deleted_records[record_id];
+        differences.deleted_records.forEach(function (record) {
             var event_type = "ca.wrdsb.skinner.trillium_enrolment.delete";
             var event = {
                 eventID: `${event_type}-${context.executionContext.invocationId}`,
