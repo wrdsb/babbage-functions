@@ -24,9 +24,9 @@
       "name": "membershipsOverrides",
       "type": "documentDB",
       "id": "{group}",
-      "databaseName": "wrdsb-codex",
+      "databaseName": "wrdsb-igor",
       "collectionName": "groups-memberships-overrides",
-      "connection": "wrdsb-codex_DOCUMENTDB",
+      "connection": "wrdsb-igor_DOCUMENTDB",
       "direction": "in"
     },
     {
